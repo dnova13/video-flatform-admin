@@ -1,0 +1,1 @@
+export { default as SignIn } from 'routes/auth/signin'
