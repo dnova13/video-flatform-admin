@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 import func from "../../utils/functions";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -14,11 +14,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 import Modal from "@material-ui/core/Modal";
 import SearchVideo from "./search"
-import {Player} from "video-react";
+import { Player } from "video-react";
 import HLSSource from "../../components/HLSSource";
 
 const YellowCheckbox = withStyles({
@@ -49,7 +49,7 @@ function getModalStyle() {
 
 
 export default (props) => {
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     const [modalStyle] = React.useState(getModalStyle);
@@ -74,15 +74,15 @@ export default (props) => {
         2: "여자"
     }
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -106,31 +106,31 @@ export default (props) => {
                  return
              }*/
 
-             let url = '/api/v1/admin/post/com/curation'
-             const headers = {
-                 'token': window.localStorage.getItem('token')
-             }
+            let url = '/api/v1/admin/post/com/curation'
+            const headers = {
+                'token': window.localStorage.getItem('token')
+            }
 
-             const res = await httpRequest('GET', url, headers, null)
+            const res = await httpRequest('GET', url, headers, null)
 
-             if (!res['success'] || res['code'] !== 1000) {
+            if (!res['success'] || res['code'] !== 1000) {
 
-                 if (res['code'] !== 1001) {
+                if (res['code'] !== 1001) {
 
-                     if (res['code'] === 1008) {
-                         func.removeToken()
-                     }
+                    if (res['code'] === 1008) {
+                        func.removeToken()
+                    }
 
-                     // removeToken()
-                     alert('불러오기 실패')
-                     return
-                 }
+                    // removeToken()
+                    alert('불러오기 실패')
+                    return
+                }
 
-                 setTitle("")
-                 setVideos([])
-                 setCurationId(0)
-                 return
-             }
+                setTitle("")
+                setVideos([])
+                setCurationId(0)
+                return
+            }
 
             // console.log(res)
 
@@ -142,7 +142,7 @@ export default (props) => {
 
 
     const save = () => {
-        setOpen({0: false, 1: false, 2: false})
+        setOpen({ 0: false, 1: false, 2: false })
         return new Promise(async (r, e) => {
 
             // console.log("video",videos)
@@ -160,7 +160,7 @@ export default (props) => {
                 alert("영상을 등록하세요.")
                 return
             }
-            else if (videos.length > 5 ) {
+            else if (videos.length > 5) {
                 alert("영상은 5개만 등록 가능합니다.")
                 return
             }
@@ -179,10 +179,10 @@ export default (props) => {
             }
 
             let data = {
-                "id" : curationId > 0 ? curationId : null,
-                "title" : title,
-                "ins_videos" : insVideo,
-                "del_videos" : [...delVideo]
+                "id": curationId > 0 ? curationId : null,
+                "title": title,
+                "ins_videos": insVideo,
+                "del_videos": [...delVideo]
             }
 
             //  console.log(data);
@@ -226,7 +226,7 @@ export default (props) => {
 
     const changeValue = (e) => {
 
-        let val = {...videos}
+        let val = { ...videos }
 
         val[e.target.name] = e.target.value
 
@@ -244,7 +244,7 @@ export default (props) => {
 
                 return {
                     id: n.id,
-                    parent_id:n.parent_id
+                    parent_id: n.parent_id
                 }
             });
 
@@ -277,12 +277,12 @@ export default (props) => {
 
         const selectedIndex = selected.findIndex(obj => obj.id === id);
 
-        console.log(id, selectedIndex, selected)
+        // console.log(id, selectedIndex, selected)
 
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, {id:id, parent_id:parent});
+            newSelected = newSelected.concat(selected, { id: id, parent_id: parent });
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -300,7 +300,7 @@ export default (props) => {
 
 
     /*   영상 리스트 보기   */
-    {/* 영상 리스트 관련 함수 */}
+    {/* 영상 리스트 관련 함수 */ }
     const clickChkBox = (e, row) => {
         e.preventDefault();
         document.querySelector(`#v${row.id}`).click()
@@ -335,16 +335,16 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"저장 하시겠습니까?"}
-                         fn={() => save()}/>
-            <AlertText open={open[2]} handleClose={() => setOpen({...open, 2: false})} text={text} classes={classes}/>
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"저장 하시겠습니까?"}
+                fn={() => save()} />
+            <AlertText open={open[2]} handleClose={() => setOpen({ ...open, 2: false })} text={text} classes={classes} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => {
-                            console.log(videos)
-                        }}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => {
+                                // console.log(videos)
+                            }}>
                             큐레이션 영상 관리
                         </Typography>
                     </Grid>
@@ -365,7 +365,7 @@ export default (props) => {
                                 }
                             }
                             onClick={() => {
-                                setOpen({...open, 0: true})
+                                setOpen({ ...open, 0: true })
                             }}
                         >저장</Button>
                     </Grid>
@@ -373,22 +373,22 @@ export default (props) => {
             </Paper>
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px', marginTop: "50px"}}
+                style={{ marginLeft: '10px', marginTop: "50px" }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="큐레이션 제목"
             />
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid container
-                      style={{padding: "30px"}}
+                    style={{ padding: "30px" }}
                 >
                     <Grid item xs={12}>
                         <TextField
                             label="제목"
                             name="title"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             multiline={true}
                             value={title}
@@ -397,7 +397,7 @@ export default (props) => {
                             }}
                             helperText={`${title.length}/${100}`}
                             InputProps={{
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             onChange={(e) => {
 
@@ -411,14 +411,14 @@ export default (props) => {
                 </Grid>
             </Paper>
             <Grid container spacing={3}
-                  style={{marginTop: '40px'}}
+                style={{ marginTop: '40px' }}
             >
                 <Grid item xs={12} sm={8}>
                     <TextField
-                        style={{marginLeft: '10px'}}
+                        style={{ marginLeft: '10px' }}
                         InputProps={{
                             readOnly: true,
-                            disableUnderline: true, classes: {input: classes.fontSize22}
+                            disableUnderline: true, classes: { input: classes.fontSize22 }
                         }}
                         value="영상 리스트"
                     />
@@ -450,7 +450,7 @@ export default (props) => {
                             modalHandler={setModalOpen}
                             initialSelect={setSelected}
                             classes={classes}
-                            style={modalStyle}/>
+                            style={modalStyle} />
                     </Modal>
                 </Grid>
                 <Grid item xs={12} sm={2}>
@@ -467,7 +467,7 @@ export default (props) => {
             </Grid>
 
             {/* 영상 리스트 */}
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid>
                     <TableContainer>
                         <Table className={classes.table}>
@@ -479,13 +479,13 @@ export default (props) => {
                                             indeterminate={selected.length > 0 && selected.length < videos.length}
                                             checked={videos.length > 0 && selected.length === videos.length}
                                             onChange={handleSelectAllClick}
-                                            inputProps={{"aria-label": "select all post"}}
+                                            inputProps={{ "aria-label": "select all post" }}
                                             color="primary"
                                         />
                                     </TableCell>
                                     <TableCell className={classes.tableCell} align="center">작성자</TableCell>
                                     <TableCell className={classes.tableCell} align="center"
-                                               style={{paddingLeft: '40px'}}
+                                        style={{ paddingLeft: '40px' }}
                                     >제목</TableCell>
                                     <TableCell className={classes.tableCell} align="center">조회수</TableCell>
                                     <TableCell className={classes.tableCell} align="center">평점</TableCell>
@@ -497,39 +497,39 @@ export default (props) => {
                             <TableBody>
                                 {videos[0] ? videos.map((row, index) => (
                                     <TableRow key={row.id} id={"t" + row.id}
-                                              style={
-                                                  isSelected(row.id) ? {backgroundColor:"#E0E7F7"}:{backgroundColor:"white"}
-                                              }
-                                              hover>
+                                        style={
+                                            isSelected(row.id) ? { backgroundColor: "#E0E7F7" } : { backgroundColor: "white" }
+                                        }
+                                        hover>
                                         <TableCell padding="checkbox">
                                             <YellowCheckbox
                                                 id={"v" + row.id}
-                                                inputProps={{"aria-labelledby": `enhanced-table-checkbox-${index}`}}
+                                                inputProps={{ "aria-labelledby": `enhanced-table-checkbox-${index}` }}
                                                 onClick={(e) => {
                                                     e.preventDefault()
                                                     handleClick(e, row.id, row.parent_id)
                                                     !isSelected(row.id) ?
-                                                    document.querySelector(`#t${row.id}`).style.backgroundColor = "#E0E7F7" :
-                                                    document.querySelector(`#t${row.id}`).style.backgroundColor = "white"
+                                                        document.querySelector(`#t${row.id}`).style.backgroundColor = "#E0E7F7" :
+                                                        document.querySelector(`#t${row.id}`).style.backgroundColor = "white"
                                                 }}
                                                 checked={isSelected(row.id)}
                                             />
                                         </TableCell>
 
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e, row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.nickname}</TableCell>
 
                                         <TableCell className={classes.tableCell}
-                                                   align="left"
-                                                   style={
-                                                       {
-                                                           paddingTop: '10px',
-                                                           paddingBottom: '10px'
-                                                       }}
+                                            align="left"
+                                            style={
+                                                {
+                                                    paddingTop: '10px',
+                                                    paddingBottom: '10px'
+                                                }}
 
                                         >
                                             <TableCell
@@ -559,7 +559,7 @@ export default (props) => {
                                                         paddingTop: '0px',
                                                         paddingBottom: '0px',
                                                         borderBottom: "0px",
-                                                        width:"100%"
+                                                        width: "100%"
                                                     }}
                                                 onClick={(e) => {
                                                     clickChkBox(e, row)
@@ -567,7 +567,7 @@ export default (props) => {
                                             >
                                                 <TextField
                                                     // className={classes.marginTop30}
-                                                    style={{marginLeft: '10px'}}
+                                                    style={{ marginLeft: '10px' }}
                                                     fullWidth
                                                     multiline
                                                     InputProps={{
@@ -580,34 +580,34 @@ export default (props) => {
                                             </TableCell>
                                         </TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e,row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.view_cnt}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e,row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.score}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e,row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.like_cnt}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e,row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.reply_cnt}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e,row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.dibs_cnt}</TableCell>
 
                                     </TableRow>

@@ -1,13 +1,13 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 import Link from "@material-ui/core/Link";
 
 import Table from "@material-ui/core/Table";
@@ -17,14 +17,14 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 
-import {Player} from 'video-react';
+import { Player } from 'video-react';
 import func from "../../utils/functions";
 import HLSSource from '../../components/HLSSource';
 
 // import 'video-react/dist/video-react.css';
 
 export default (props) => {
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     const [state, setState] = React.useState("");
@@ -38,15 +38,15 @@ export default (props) => {
         2: "여자"
     }
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -124,7 +124,7 @@ export default (props) => {
 
 
     const chkBlind = (id, _type) => {
-        setOpen({0: false, 1: false, 2:false})
+        setOpen({ 0: false, 1: false, 2: false })
 
         return new Promise(async (result, err) => {
 
@@ -159,18 +159,18 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"블라인드 하시겠습니까?"}
-                         fn={() => chkBlind(match.params.id, 1)}/>
-            <DialogAlert open={open[1]} handleClose={() => setOpen({...open, 1: false})} text={"블라인드 해제 하시겠습니까?"}
-                         fn={() => chkBlind(match.params.id, 0)}/>
-            <AlertText open={open[2]} handleClose={() => setOpen({...open, 2: false})} text={text} classes={classes}/>
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"블라인드 하시겠습니까?"}
+                fn={() => chkBlind(match.params.id, 1)} />
+            <DialogAlert open={open[1]} handleClose={() => setOpen({ ...open, 1: false })} text={"블라인드 해제 하시겠습니까?"}
+                fn={() => chkBlind(match.params.id, 0)} />
+            <AlertText open={open[2]} handleClose={() => setOpen({ ...open, 2: false })} text={text} classes={classes} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => {
-                            console.log(state)
-                        }}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => {
+                                // console.log(state)
+                            }}>
                             신고 내역 상세
                         </Typography>
                     </Grid>
@@ -188,7 +188,7 @@ export default (props) => {
                                     }
                                 }
                                 onClick={() => {
-                                    setOpen({...open, 0: true})
+                                    setOpen({ ...open, 0: true })
                                 }}
                             >블라인드</Button> :
                             <Button
@@ -196,14 +196,14 @@ export default (props) => {
                                 variant="contained"
                                 color="primary"
                                 onClick={() => {
-                                    setOpen({...open, 1: true})
+                                    setOpen({ ...open, 1: true })
                                 }}
                             >블라인드 해제</Button>
                         }
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Button
-                            style={{fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7'}}
+                            style={{ fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7' }}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -215,18 +215,18 @@ export default (props) => {
                 </Grid>
             </Paper>
             {state ?
-                <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+                <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 label="신고일"
                                 name="date"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={state['report_at'] ? state['report_at'] : ''}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -239,12 +239,12 @@ export default (props) => {
                             <TextField
                                 label="신고 유형"
                                 name="type"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={'댓글'}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -257,12 +257,12 @@ export default (props) => {
                             <TextField
                                 label="사유"
                                 name="reason"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={state.reason}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -275,12 +275,12 @@ export default (props) => {
                             <TextField
                                 label="신고한 회원 닉네임"
                                 name="reporting_nickname"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={state['reporting_nickname'] ? state['reporting_nickname'] : ''}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -293,12 +293,12 @@ export default (props) => {
                             <TextField
                                 label="신고된 회원 닉네임"
                                 name="reporting_nickname"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={state['reported_nickname'] ? state['reported_nickname'] : ''}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -311,7 +311,7 @@ export default (props) => {
                             <TextField
                                 label="상세 사유"
                                 name="detail"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={state['content'] ? state['content'] : ''}
                                 multiline
@@ -319,7 +319,7 @@ export default (props) => {
                                 rowsMax={10}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -342,12 +342,12 @@ export default (props) => {
                             >신고한 영상</label>
                         </Grid>
                         <Grid item xs={12} sm={5}
-                              style={{
-                                  marginTop: "0px",
-                              }}>
+                            style={{
+                                marginTop: "0px",
+                            }}>
                             <Grid container justify="center" alignItems="center">
                                 <Player fluid={false} width="100%" height={250} controls
-                                        poster={state.thumbnail ? process.env.REACT_APP_API_URL + state.thumbnail : ""}
+                                    poster={state.thumbnail ? process.env.REACT_APP_API_URL + state.thumbnail : ""}
                                 >
                                     <HLSSource
                                         isVideoChild
@@ -358,24 +358,24 @@ export default (props) => {
                         </Grid>
                         <Grid item xs={12} sm={7}>
                             <TableContainer>
-                                <Table className={classes.table} style={{marginTop: "15px"}}>
+                                <Table className={classes.table} style={{ marginTop: "15px" }}>
                                     <TableBody>
                                         <TableRow>
                                             <TableCell className={classes.tableCellNotBorder} align="left"
-                                                       style={{
-                                                           fontSize: "18px",
-                                                           textDecorationLine: "underline"
-                                                       }}
+                                                style={{
+                                                    fontSize: "18px",
+                                                    textDecorationLine: "underline"
+                                                }}
                                             >
                                                 {state.title}
                                             </TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell className={classes.tableCellNotBorder} align="left"
-                                                       style={{
-                                                           fontSize: "20px",
-                                                           paddingBottom: "25px"
-                                                       }}
+                                                style={{
+                                                    fontSize: "20px",
+                                                    paddingBottom: "25px"
+                                                }}
                                             >
                                                 {state.creator_nickname}
                                             </TableCell>
@@ -407,7 +407,7 @@ export default (props) => {
                             <TextField
                                 label="댓글 내용"
                                 name="reply"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={state['reply_content'] ? state['reply_content'] : ''}
                                 multiline
@@ -415,7 +415,7 @@ export default (props) => {
                                 rowsMax={10}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -428,12 +428,12 @@ export default (props) => {
                             <TextField
                                 label="블라인드 유무"
                                 name="reporting_nickname"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={state['blind_chk'] ? "블라인드" : "공개"}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -444,7 +444,7 @@ export default (props) => {
                             />
                         </Grid>
                     </Grid>
-                    <hr/>
+                    <hr />
                 </Paper> : ""}
         </>
     )

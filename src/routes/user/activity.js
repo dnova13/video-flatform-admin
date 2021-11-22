@@ -1,6 +1,6 @@
 import 'date-fns';
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from "prop-types";
 
 import DateFnsUtils from '@date-io/date-fns';
@@ -29,18 +29,18 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from "@material-ui/core/Button";
 import ClearIcon from "@material-ui/icons/Clear";
-import {httpRequest} from "../../utils/httpReq";
-import {Pagination} from "@material-ui/lab";
+import { httpRequest } from "../../utils/httpReq";
+import { Pagination } from "@material-ui/lab";
 import Checkbox from "@material-ui/core/Checkbox";
-import {withStyles, makeStyles} from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 import MenuItem from '@material-ui/core/MenuItem';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import Radio from "@material-ui/core/Radio";
-import {green} from "@material-ui/core/colors";
+import { green } from "@material-ui/core/colors";
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -146,7 +146,7 @@ export default (props) => {
     const [selected, setSelected] = React.useState([]);
     const [dense, setDense] = React.useState(false);
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
     const [period, setPeriod] = React.useState("week")
@@ -169,12 +169,12 @@ export default (props) => {
 
     const setSession = (_page, _type) => {
 
-        console.log(page);
+        // console.log(page);
 
         window.sessionStorage.setItem("page", _page ? _page : page)
         window.sessionStorage.setItem("path", window.location.pathname)
 
-        console.log(window.sessionStorage)
+        // console.log(window.sessionStorage)
     }
 
     const removeSession = async () => {
@@ -193,7 +193,7 @@ export default (props) => {
     const dataReq = () => {
         return new Promise(async (r, e) => {
 
-            console.log(period, week, selectedDate);
+            // console.log(period, week, selectedDate);
 
             let date = Moment(selectedDate).format("YYYY-MM-DD")
             let url;
@@ -230,7 +230,7 @@ export default (props) => {
 
             let resData = res["data"] ? res["data"] : [];
 
-            console.log(res);
+            // console.log(res);
 
             let _data = [];
             let __week = ['일', '월', '화', '수', '목', '금', '토']
@@ -241,7 +241,7 @@ export default (props) => {
 
                     /// 바 차트 설정
                     let startDate = new Date(selectedDate)
-                    startDate.setDate(startDate.getDate() - ((startDate.getDay() === 0 ? 7 : startDate.getDay() )  - 1));
+                    startDate.setDate(startDate.getDate() - ((startDate.getDay() === 0 ? 7 : startDate.getDay()) - 1));
 
                     for (let i = 1; i < 8; i++) {
 
@@ -293,8 +293,8 @@ export default (props) => {
 
                     let item = {
                         // name: `${year}-${String((i+1)).length !== 2 ? "0"+(i+1) : (i+1)}월`,
-                        name: `${String((i+1)).length !== 2 ? "0"+(i+1) : (i+1)}월`,
-                        access_cnt : 0
+                        name: `${String((i + 1)).length !== 2 ? "0" + (i + 1) : (i + 1)}월`,
+                        access_cnt: 0
                     }
                     _data.push(item)
                 }
@@ -302,10 +302,10 @@ export default (props) => {
                 for (let item of resData) {
                     _data[item.idx - 1].access_cnt = item.access_cnt
                 }
-                console.log(year)
+                // console.log(year)
             }
 
-            console.log(_data)
+            // console.log(_data)
             setChartData(_data)
         })
     }
@@ -322,12 +322,12 @@ export default (props) => {
             arr.push(date.getFullYear());
         }
 
-        console.log(arr);
+        // console.log(arr);
         setYears(arr);
     }
 
     const handleTabChange = (e, val) => {
-        console.log(val)
+        // console.log(val)
 
         setPeriod(val);
         setWeek("this")
@@ -335,7 +335,7 @@ export default (props) => {
     };
 
     const handleRadioChange = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         setWeek(e.target.value);
     };
 
@@ -345,14 +345,14 @@ export default (props) => {
 
     const openAlert = (text) => {
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
     const handleDateChange = (date) => {
-        console.log(date)
+        // console.log(date)
         setSelectedDate(date);
     };
 
@@ -366,13 +366,13 @@ export default (props) => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={8}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => console.log('a')}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => { }}>
                             활동량 조회
                         </Typography>
                     </Grid>
                 </Grid>
             </Paper>
-            <br/><br/>
+            <br /><br />
 
             <Grid>
                 <MyTabs
@@ -382,56 +382,56 @@ export default (props) => {
                     onChange={handleTabChange}
                     aria-label="disabled tabs example"
                 >
-                    <MyTab value={"week"} style={{paddingLeft: "30px", paddingRight: "30px"}} label="주별 조회"/>
-                    <MyTab value={"month"} style={{paddingLeft: "30px", paddingRight: "30px"}} label="월별 조회"/>
+                    <MyTab value={"week"} style={{ paddingLeft: "30px", paddingRight: "30px" }} label="주별 조회" />
+                    <MyTab value={"month"} style={{ paddingLeft: "30px", paddingRight: "30px" }} label="월별 조회" />
                 </MyTabs>
             </Grid>
-            <Grid className={classes.tableWrap} style={{marginTop: "0px"}}>
+            <Grid className={classes.tableWrap} style={{ marginTop: "0px" }}>
                 <Grid className={classes.paper}>
                     {period === "week" ?
                         <TextField
                             className={classes.marginTop10}
-                            style={{marginLeft: '10px', marginTop: "30px", marginBottom: "10px"}}
+                            style={{ marginLeft: '10px', marginTop: "30px", marginBottom: "10px" }}
                             InputProps={{
                                 readOnly: true,
-                                disableUnderline: true, classes: {input: classes.fontSize22}
+                                disableUnderline: true, classes: { input: classes.fontSize22 }
                             }}
-                            value="일별 접속 수"/> :
+                            value="일별 접속 수" /> :
                         <TextField
                             className={classes.marginTop10}
-                            style={{marginLeft: '10px', marginTop: "30px", marginBottom: "10px"}}
+                            style={{ marginLeft: '10px', marginTop: "30px", marginBottom: "10px" }}
                             InputProps={{
                                 readOnly: true,
-                                disableUnderline: true, classes: {input: classes.fontSize22}
+                                disableUnderline: true, classes: { input: classes.fontSize22 }
                             }}
-                            value="월별 접속 수"/>
+                            value="월별 접속 수" />
                     }
-                    <Paper className={classes.paper} style={{paddingLeft: "30px", paddingTop: "20px"}}>
+                    <Paper className={classes.paper} style={{ paddingLeft: "30px", paddingTop: "20px" }}>
                         {period === "week" ?
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={2}>
-                                    <h3 style={{marginTop: "10px"}}>기간 설정</h3>
+                                    <h3 style={{ marginTop: "10px" }}>기간 설정</h3>
                                 </Grid>
                                 <Grid item xs={12} sm={4}>
                                     <FormControl component="fieldset">
                                         <FormLabel component="legend"></FormLabel>
                                         <RadioGroup value={week} row aria-label="position" name="position"
-                                                    defaultValue="top" onChange={handleRadioChange}>
+                                            defaultValue="top" onChange={handleRadioChange}>
                                             <FormControlLabel
                                                 value="this"
-                                                control={<Radio color="primary"/>}
-                                                label="이번주"/>
+                                                control={<Radio color="primary" />}
+                                                label="이번주" />
                                             <FormControlLabel
                                                 value="7ago"
-                                                control={<GreenRadio/>}
-                                                label="1주 전"/>
+                                                control={<GreenRadio />}
+                                                label="1주 전" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
                                 <Grid item xs={12} sm={3}>
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                         <KeyboardDatePicker
-                                            style={{marginTop: "0px"}}
+                                            style={{ marginTop: "0px" }}
                                             disableToolbar
                                             variant="inline"
                                             format="yyyy-MM-dd"
@@ -452,7 +452,7 @@ export default (props) => {
                                         className="btn-choose"
                                         variant="contained"
                                         color="primary"
-                                        style={{marginRight: '10px', paddingLeft: "40px", paddingRight: "40px"}}
+                                        style={{ marginRight: '10px', paddingLeft: "40px", paddingRight: "40px" }}
                                         component="span"
                                         onClick={async () => {
                                             await dataReq()
@@ -477,12 +477,13 @@ export default (props) => {
                                             value={year}
                                             label={"Year"}
                                             onChange={handleSelChange}
-                                            style={{textAlign : "center"
+                                            style={{
+                                                textAlign: "center"
                                             }}
                                         >
                                             {years[0] ? years.map((row, idx) => (
-                                                    <MenuItem key={idx} value={row}>{row}</MenuItem>
-                                                ))
+                                                <MenuItem key={idx} value={row}>{row}</MenuItem>
+                                            ))
                                                 : <MenuItem></MenuItem>
                                             }
                                         </Select>
@@ -492,12 +493,12 @@ export default (props) => {
                         }
                     </Paper>
                     <Paper className={classes.paper}
-                           style={{marginTop: "15px", paddingLeft: "30px", paddingTop: "20px"}}>
+                        style={{ marginTop: "15px", paddingLeft: "30px", paddingTop: "20px" }}>
                         {period === "week" ?
-                            <ReBarChart chartData={chartData}/>
+                            <ReBarChart chartData={chartData} />
                             :
                             // <ReBarChart chartData = {chartData}/>
-                            <BarLineChart chartData={chartData}/>
+                            <BarLineChart chartData={chartData} />
                         }
                     </Paper>
                 </Grid>

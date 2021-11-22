@@ -1,18 +1,18 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
-import {makeStyles} from '@material-ui/core/styles';
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
 
-import {deepOrange, deepPurple} from '@material-ui/core/colors';
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 
 import Link from "@material-ui/core/Link";
@@ -24,7 +24,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 
-import {Player} from 'video-react';
+import { Player } from 'video-react';
 import func from "../../utils/functions";
 import userIcon from "../../user.png";
 import Select from "@material-ui/core/Select";
@@ -33,14 +33,14 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Search from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
-import {Pagination} from "@material-ui/lab";
+import { Pagination } from "@material-ui/lab";
 
 // import 'video-react/dist/video-react.css';
 
 
 export default (props) => {
 
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     // const ava = useStyles();
@@ -67,15 +67,15 @@ export default (props) => {
     }, [page, total, type])
 
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -88,7 +88,7 @@ export default (props) => {
         window.sessionStorage.setItem("type", _type || _type === 0 ? _type : type)
         window.sessionStorage.setItem("path", window.location.pathname)
 
-        console.log(window.sessionStorage)
+        // console.log(window.sessionStorage)
     }
 
     const removeSession = async () => {
@@ -112,7 +112,7 @@ export default (props) => {
     const getPoints = (q) => {
         return new Promise(async (r, e) => {
 
-            console.log("match", match)
+            // console.log("match", match)
 
             if (window.sessionStorage.path !== window.location.pathname) {
                 await removeSession()
@@ -130,7 +130,7 @@ export default (props) => {
 
             const res = await httpRequest('GET', url, headers, null)
 
-            console.log(res);
+            // console.log(res);
 
 
             if (!res['success']) {
@@ -172,7 +172,7 @@ export default (props) => {
             }
 
             const res = await httpRequest('GET', url, headers, null)
-            console.log(res);
+            // console.log(res);
 
             if (!res['success']) {
                 if (res['code'] !== 1001) {
@@ -191,7 +191,7 @@ export default (props) => {
 
             let page_count = res['total'] / limit
 
-            console.log(page_count);
+            // console.log(page_count);
 
             if (res['total'] % limit !== 0) {
                 page_count += 1
@@ -213,7 +213,7 @@ export default (props) => {
 
     const handleSelChange = (event) => {
 
-        console.log(event.target.value)
+        // console.log(event.target.value)
 
         setType(event.target.value);
         setPage(1)
@@ -232,7 +232,7 @@ export default (props) => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} >
+                            style={{ paddingTop: '5px', margin: 0 }} >
                             후원한 내역
                         </Typography>
                     </Grid>
@@ -242,7 +242,7 @@ export default (props) => {
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Button
-                            style={{fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7'}}
+                            style={{ fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7' }}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -256,25 +256,25 @@ export default (props) => {
             {/* 포인트 정보 */}
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px', marginTop: "50px"}}
+                style={{ marginLeft: '10px', marginTop: "50px" }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="포인트"
             />
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             label="- 후원한 포인트"
                             name="sponsoring_point"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={point ? numberWithCommas(point["total_sponsoring"]) + " P" : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -288,12 +288,12 @@ export default (props) => {
                         <TextField
                             label="- 영상 후원 포인트"
                             name="video_sponsor"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={point ? numberWithCommas(point["total_sponsoring_video"]) + " P" : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -306,12 +306,12 @@ export default (props) => {
                         <TextField
                             label="- 크리에이터 후원 포인트"
                             name="creator_sponsor"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={point ? numberWithCommas(point["total_sponsoring_creator"]) + " P" : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -324,7 +324,7 @@ export default (props) => {
             </Paper>
 
             <Grid className={classes.tableWrap}>
-               {/* <Grid container spacing={3} className={classes.tableTop}>
+                {/* <Grid container spacing={3} className={classes.tableTop}>
                     <Grid item xs={12} sm={10}>
 
                     </Grid>
@@ -333,51 +333,51 @@ export default (props) => {
                     </Grid>
                 </Grid>*/}
 
-                    <TableContainer>
-                        <Table className={classes.table}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell className={classes.tableCell} align="center">사용일</TableCell>
-                                    <TableCell className={classes.tableCell} align="center">유형</TableCell>
-                                    <TableCell className={classes.tableCell} align="center">상세내역</TableCell>
-                                    <TableCell className={classes.tableCell} align="center">포인트</TableCell>
+                <TableContainer>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell className={classes.tableCell} align="center">사용일</TableCell>
+                                <TableCell className={classes.tableCell} align="center">유형</TableCell>
+                                <TableCell className={classes.tableCell} align="center">상세내역</TableCell>
+                                <TableCell className={classes.tableCell} align="center">포인트</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {state[0] ? state.map((row, index) => (
+                                <TableRow key={row.id} hover>
+
+                                    <TableCell className={classes.tableCell}
+                                        align="center"
+                                    >{row.create_at}</TableCell>
+                                    <TableCell className={classes.tableCell} align="center"
+                                    >{row.video_post_id > 0 ? "영상 후원" : row.video_post_id === 0 ? "크리에이터 후원" : ""}</TableCell>
+
+                                    <TableCell className={classes.tableCell}
+                                        align="center">
+                                        {row.video_post_id > 0 ? `영상 ${row.title} 에 후원` : row.video_post_id === 0 ? `크리에이터 ${row.receiver_nickname}에 후원` : ""}
+                                    </TableCell>
+                                    <TableCell className={classes.tableCell}
+                                        align="center"
+                                    >{"- " + numberWithCommas(row.point_quantity) + " P"}</TableCell>
+
                                 </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {state[0] ? state.map((row, index) => (
-                                    <TableRow key={row.id} hover>
-
-                                        <TableCell className={classes.tableCell}
-                                                   align="center"
-                                        >{row.create_at}</TableCell>
-                                        <TableCell className={classes.tableCell} align="center"
-                                        >{row.video_post_id > 0 ? "영상 후원" : row.video_post_id === 0 ? "크리에이터 후원" : ""}</TableCell>
-
-                                        <TableCell className={classes.tableCell}
-                                                   align="center">
-                                            {row.video_post_id > 0 ? `영상 ${row.title} 에 후원` : row.video_post_id === 0 ? `크리에이터 ${row.receiver_nickname}에 후원` : ""}
-                                        </TableCell>
-                                        <TableCell className={classes.tableCell}
-                                                   align="center"
-                                        >{  "- " + numberWithCommas(row.point_quantity) + " P"}</TableCell>
-
-                                    </TableRow>
-                                )) : <TableRow></TableRow>}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                            )) : <TableRow></TableRow>}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Grid>
-            <Grid container direction="column-reverse" alignItems="flex-end" style={{paddingTop: '20px'}}>
+            <Grid container direction="column-reverse" alignItems="flex-end" style={{ paddingTop: '20px' }}>
                 <Grid item xs={12}>
                     <Pagination count={total} page={page} size="large" variant="outlined" shape="rounded"
-                                color="primary"
-                                onChange={(e, v) => {
+                        color="primary"
+                        onChange={(e, v) => {
 
-                                    console.log("v", v)
-                                    setPage(v)
-                                    setSession(v)
-                                    // history.push(`/admin/earnings/sponsor/list?p=${v}&s=${search}`)
-                                }}/>
+                            // console.log("v", v)
+                            setPage(v)
+                            setSession(v)
+                            // history.push(`/admin/earnings/sponsor/list?p=${v}&s=${search}`)
+                        }} />
                 </Grid>
             </Grid>
         </>

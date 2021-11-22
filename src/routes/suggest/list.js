@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from "prop-types";
 
 
@@ -20,12 +20,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from "@material-ui/core/Button";
 import ClearIcon from "@material-ui/icons/Clear";
-import {httpRequest} from "../../utils/httpReq";
-import {Pagination} from "@material-ui/lab";
+import { httpRequest } from "../../utils/httpReq";
+import { Pagination } from "@material-ui/lab";
 import Checkbox from "@material-ui/core/Checkbox";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 
 import Toolbar from "@material-ui/core/Toolbar";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -82,13 +82,13 @@ export default (props) => {
 
     const setSession = (_page) => {
 
-        console.log(page, search);
+        // console.log(page, search);
 
         window.sessionStorage.setItem("page", _page ? _page : page)
         window.sessionStorage.setItem("search", search)
         window.sessionStorage.setItem("path", window.location.pathname)
 
-        console.log(window.sessionStorage)
+        // console.log(window.sessionStorage)
     }
 
     const removeSession = async () => {
@@ -107,7 +107,7 @@ export default (props) => {
     const dataReq = () => {
         return new Promise(async (r, e) => {
 
-            console.log(window.sessionStorage);
+            // console.log(window.sessionStorage);
 
             if (window.sessionStorage.path !== window.location.pathname) {
                 await removeSession()
@@ -129,7 +129,7 @@ export default (props) => {
             }
 
             const res = await httpRequest('GET', url, headers, null)
-            console.log(res);
+            // console.log(res);
 
             if (!res['success']) {
                 if (res['code'] !== 1001) {
@@ -148,7 +148,7 @@ export default (props) => {
 
             let page_count = res['total'] / limit
 
-            console.log(page_count);
+            // console.log(page_count);
 
             if (res['total'] % limit !== 0) {
                 page_count += 1
@@ -163,7 +163,7 @@ export default (props) => {
 
         if (e.target.checked) {
 
-            console.log(state)
+            // console.log(state)
             const newSelecteds = state.map((n) => n.id);
             setSelected(newSelecteds);
             return;
@@ -201,16 +201,16 @@ export default (props) => {
 
     const openAlert = (text) => {
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
     const delete_post = (selected) => {
         return new Promise(async (result, err) => {
 
-            console.log(selected)
+            // console.log(selected)
             setOpen(false)
 
 
@@ -225,10 +225,10 @@ export default (props) => {
             for (let item of selected) {
 
                 let data = {
-                    id : item
+                    id: item
                 }
 
-                console.log(data);
+                // console.log(data);
                 res = await httpRequest('POST', url, headers, JSON.stringify(data))
 
                 if (res['code'] > 1000) {
@@ -238,7 +238,7 @@ export default (props) => {
                 }
             }
 
-            console.log(res)
+            // console.log(res)
 
             // openAlert("정상 처리 되었습니다")
 
@@ -254,7 +254,7 @@ export default (props) => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={8}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => console.log('a')}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => { }}>
                             건의 내역
                         </Typography>
                     </Grid>
@@ -282,11 +282,11 @@ export default (props) => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <Search/>
+                                        <Search />
                                     </InputAdornment>
                                 ), endAdornment: (
                                     <IconButton position="end" onClick={() => setSearch('')}>
-                                        <ClearIcon/>
+                                        <ClearIcon />
                                     </IconButton>
                                 ),
                             }}
@@ -312,12 +312,12 @@ export default (props) => {
 
                                         {/*<TableCell className={classes.tableCell} align="center" onClick={() => moreBtnHandler(row)}>{row.id}</TableCell>*/}
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={() => moreBtnHandler(row)}>{row.create_at}</TableCell>
+                                            align="center"
+                                            onClick={() => moreBtnHandler(row)}>{row.create_at}</TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   onClick={() => moreBtnHandler(row)}>{row.title}</TableCell>
-                                        <TableCell id={"u"+row.user_id} className={classes.tableCell} align="center"
-                                                   onClick={() => moreBtnHandler(row)}>{row.nickname}</TableCell>
+                                            onClick={() => moreBtnHandler(row)}>{row.title}</TableCell>
+                                        <TableCell id={"u" + row.user_id} className={classes.tableCell} align="center"
+                                            onClick={() => moreBtnHandler(row)}>{row.nickname}</TableCell>
 
                                     </TableRow>
                                 )) : <TableRow></TableRow>}
@@ -326,17 +326,17 @@ export default (props) => {
                     </TableContainer>
                 </Grid>
             </Grid>
-            <Grid container direction="column-reverse" alignItems="flex-end" style={{paddingTop: '20px'}}>
+            <Grid container direction="column-reverse" alignItems="flex-end" style={{ paddingTop: '20px' }}>
                 <Grid item xs={12}>
                     <Pagination count={total} page={page} size="large" variant="outlined" shape="rounded"
-                                color="primary"
-                                onChange={(e, v) => {
+                        color="primary"
+                        onChange={(e, v) => {
 
-                                    console.log("v", v)
-                                    setPage(v)
-                                    setSession(v)
-                                    // history.push(`/admin/service/suggest/list?p=${v}&s=${search}`)
-                                }}/>
+                            // console.log("v", v)
+                            setPage(v)
+                            setSession(v)
+                            // history.push(`/admin/service/suggest/list?p=${v}&s=${search}`)
+                        }} />
                 </Grid>
             </Grid>
         </>

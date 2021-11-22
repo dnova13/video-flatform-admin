@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from "prop-types";
 
 
@@ -20,19 +20,19 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from "@material-ui/core/Button";
 import ClearIcon from "@material-ui/icons/Clear";
-import {httpRequest} from "../../utils/httpReq";
-import {Pagination} from "@material-ui/lab";
+import { httpRequest } from "../../utils/httpReq";
+import { Pagination } from "@material-ui/lab";
 import Checkbox from "@material-ui/core/Checkbox";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 
 import Toolbar from "@material-ui/core/Toolbar";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList"
 import MenuItem from "@material-ui/core/MenuItem";
 import func from "../../utils/functions";
-import {Player} from 'video-react';
+import { Player } from 'video-react';
 import HLSSource from '../../components/HLSSource';
 
 const YellowCheckbox = withStyles({
@@ -84,7 +84,7 @@ export default (props) => {
 
     const [adding, setAdding] = React.useState(videos);
 
-    const [open, setOpen] = React.useState({0: false, 1: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false })
     const [text, setText] = React.useState('')
 
     const [type, setType] = React.useState(status_chk('type') ? parseInt(window.sessionStorage.getItem('type')) : 0);
@@ -170,7 +170,7 @@ export default (props) => {
 
             let page_count = res['total'] / limit
 
-            console.log(page_count);
+            // console.log(page_count);
 
             if (res['total'] % limit !== 0) {
                 page_count += 1
@@ -186,7 +186,7 @@ export default (props) => {
 
         if (e.target.checked) {
 
-            console.log(state)
+            // console.log(state)
             const newVideos = state.map((n) => n);
             const newSelecteds = state.map((n) => n.id);
 
@@ -204,12 +204,12 @@ export default (props) => {
 
     const handleClick = (event, id, val) => {
 
-        console.log(id);
+        // console.log(id);
         // const selectedIndex = selected.indexOf(id);
         const selectedIndex = adding.findIndex(obj => obj.id === id)
 
-        console.log(id, selectedIndex, adding)
-        console.log("video : ", val)
+        // console.log(id, selectedIndex, adding)
+        // console.log("video : ", val)
 
         let newSelected = [];
         let newVideo = [];
@@ -224,8 +224,8 @@ export default (props) => {
         else {
 
             if (adding[selectedIndex].parent_id) {
-                console.log("unchk",id);
-                console.log(unchkVideos)
+                // console.log("unchk", id);
+                // console.log(unchkVideos)
                 unchkVideos.add(id);
             }
         }
@@ -251,7 +251,7 @@ export default (props) => {
             );
         }
 
-        console.log("newSelected ", newSelected)
+        // console.log("newSelected ", newSelected)
         // console.log(newVideos);
 
         setSelected(newSelected);
@@ -274,15 +274,15 @@ export default (props) => {
 
     const openAlert = (text) => {
         setText(text)
-        setOpen({0: false, 1: false})
+        setOpen({ 0: false, 1: false })
         setTimeout(function () {
-            setOpen({0: false, 1: false})
+            setOpen({ 0: false, 1: false })
         }, 700);
     }
 
     const handleSelChange = (event) => {
 
-        console.log(event.target.value)
+        // console.log(event.target.value)
 
         setType(event.target.value);
         setPage(1)
@@ -297,7 +297,7 @@ export default (props) => {
         // console.log("deling",unchkVideos)
 
         addVideos(adding);
-        setOpen({0: false, 1: false, 2: false})
+        setOpen({ 0: false, 1: false, 2: false })
         initialSelect([])
         modalHandler(false);
     }
@@ -315,8 +315,8 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"추가 하시겠습니까?"}
-                         fn={() => addVideo()}/>
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"추가 하시겠습니까?"}
+                fn={() => addVideo()} />
             <Paper className={classes.modalPaper} style={style}>
                 <Grid container spacing={3}
                 >
@@ -327,15 +327,15 @@ export default (props) => {
                         <IconButton
                             onClick={handleClose}
                         >
-                            <ClearIcon/>
+                            <ClearIcon />
                         </IconButton>
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => console.log('a')}>
-                            게시물 목록 <span style={{color: "#A6A6A6", fontSize: "18px"}}> (총 {listTotal}개)</span>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => { }}>
+                            게시물 목록 <span style={{ color: "#A6A6A6", fontSize: "18px" }}> (총 {listTotal}개)</span>
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={4}>
@@ -353,10 +353,10 @@ export default (props) => {
                             }
                             onClick={(e) => {
 
-                                    // if (selected.length > 0) {
-                                        setOpen({...open, 0: true})
-                                    // }
-                                }
+                                // if (selected.length > 0) {
+                                setOpen({ ...open, 0: true })
+                                // }
+                            }
                             }
                         >추가</Button>
                     </Grid>
@@ -382,11 +382,11 @@ export default (props) => {
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <Search/>
+                                            <Search />
                                         </InputAdornment>
                                     ), endAdornment: (
                                         <IconButton position="end" onClick={() => setSearch('')}>
-                                            <ClearIcon/>
+                                            <ClearIcon />
                                         </IconButton>
                                     ),
                                 }}
@@ -412,7 +412,7 @@ export default (props) => {
                                         <TableCell className={classes.tableCell} align="center">등록일</TableCell>
                                         <TableCell className={classes.tableCell} align="center">작성자</TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   style={{paddingLeft: '40px'}}
+                                            style={{ paddingLeft: '40px' }}
                                         >제목</TableCell>
                                         <TableCell className={classes.tableCell} align="center">조회수</TableCell>
                                         <TableCell className={classes.tableCell} align="center">평점</TableCell>
@@ -425,14 +425,14 @@ export default (props) => {
                                     {state[0] ? state.map((row, index) => (
 
                                         <TableRow id={"t" + row.id} key={row.id} hover
-                                                  style={
-                                                      isSelected(row.id) ? {backgroundColor:"#E0E7F7"}:{backgroundColor:"white"}
-                                                  }
+                                            style={
+                                                isSelected(row.id) ? { backgroundColor: "#E0E7F7" } : { backgroundColor: "white" }
+                                            }
                                         >
                                             <TableCell padding="checkbox">
                                                 <YellowCheckbox
                                                     id={"c" + row.id}
-                                                    inputProps={{"aria-labelledby": `enhanced-table-checkbox-${index}`}}
+                                                    inputProps={{ "aria-labelledby": `enhanced-table-checkbox-${index}` }}
                                                     onClick={(e) => {
                                                         e.preventDefault();
                                                         handleClick(e, row.id, row)
@@ -444,27 +444,27 @@ export default (props) => {
                                                 />
                                             </TableCell>
                                             <TableCell className={classes.tableCell}
-                                                       align="center"
-                                                       onClick={(e) => {
-                                                           clickChkBox(e, row)
-                                                       }}
+                                                align="center"
+                                                onClick={(e) => {
+                                                    clickChkBox(e, row)
+                                                }}
                                             >
                                                 {row.create_at}
                                             </TableCell>
                                             <TableCell className={classes.tableCell}
-                                                       align="center"
-                                                       onClick={(e) => {
-                                                           clickChkBox(e, row)
-                                                       }}
+                                                align="center"
+                                                onClick={(e) => {
+                                                    clickChkBox(e, row)
+                                                }}
                                             >{row.nickname}</TableCell>
 
                                             <TableCell className={classes.tableCell}
-                                                       align="left"
-                                                       style={
-                                                           {
-                                                               paddingTop: '10px',
-                                                               paddingBottom: '10px'
-                                                           }}
+                                                align="left"
+                                                style={
+                                                    {
+                                                        paddingTop: '10px',
+                                                        paddingBottom: '10px'
+                                                    }}
 
                                             >
                                                 <TableCell
@@ -495,7 +495,7 @@ export default (props) => {
                                                             paddingTop: '0px',
                                                             paddingBottom: '0px',
                                                             borderBottom: "0px",
-                                                            width:"100%"
+                                                            width: "100%"
                                                         }}
                                                     onClick={(e) => {
                                                         clickChkBox(e, row)
@@ -503,7 +503,7 @@ export default (props) => {
                                                 >
                                                     <TextField
                                                         // className={classes.marginTop30}
-                                                        style={{marginLeft: '10px'}}
+                                                        style={{ marginLeft: '10px' }}
                                                         fullWidth
                                                         multiline
                                                         InputProps={{
@@ -517,34 +517,34 @@ export default (props) => {
                                                 </TableCell>
                                             </TableCell>
                                             <TableCell className={classes.tableCell}
-                                                       align="center"
-                                                       onClick={(e) => {
-                                                           clickChkBox(e, row)
-                                                       }}
+                                                align="center"
+                                                onClick={(e) => {
+                                                    clickChkBox(e, row)
+                                                }}
                                             >{row.view_cnt}</TableCell>
                                             <TableCell className={classes.tableCell}
-                                                       align="center"
-                                                       onClick={(e) => {
-                                                           clickChkBox(e, row)
-                                                       }}
+                                                align="center"
+                                                onClick={(e) => {
+                                                    clickChkBox(e, row)
+                                                }}
                                             >{row.score}</TableCell>
                                             <TableCell className={classes.tableCell}
-                                                       align="center"
-                                                       onClick={(e) => {
-                                                           clickChkBox(e, row)
-                                                       }}
+                                                align="center"
+                                                onClick={(e) => {
+                                                    clickChkBox(e, row)
+                                                }}
                                             >{row.like_cnt}</TableCell>
                                             <TableCell className={classes.tableCell}
-                                                       align="center"
-                                                       onClick={(e) => {
-                                                           clickChkBox(e, row)
-                                                       }}
+                                                align="center"
+                                                onClick={(e) => {
+                                                    clickChkBox(e, row)
+                                                }}
                                             >{row.reply_cnt}</TableCell>
                                             <TableCell className={classes.tableCell}
-                                                       align="center"
-                                                       onClick={(e) => {
-                                                           clickChkBox(e, row)
-                                                       }}
+                                                align="center"
+                                                onClick={(e) => {
+                                                    clickChkBox(e, row)
+                                                }}
                                             >{row.dibs_cnt}</TableCell>
 
                                         </TableRow>
@@ -554,18 +554,18 @@ export default (props) => {
                         </TableContainer>
                     </Grid>
                 </Grid>
-                <Grid container direction="column-reverse" alignItems="flex-end" style={{paddingTop: '20px'}}>
+                <Grid container direction="column-reverse" alignItems="flex-end" style={{ paddingTop: '20px' }}>
                     <Grid item xs={12}>
                         <Pagination count={total} page={page} size="large" variant="outlined" shape="rounded"
-                                    color="primary"
-                                    onChange={(e, v) => {
+                            color="primary"
+                            onChange={(e, v) => {
 
-                                        console.log("v", v)
-                                        setPage(v)
-                                        // setSelected([]);
-                                        // setSession(v)
-                                        // history.push(`/admin/service/notice/list?p=${v}&s=${search}`)
-                                    }}/>
+                                console.log("v", v)
+                                setPage(v)
+                                // setSelected([]);
+                                // setSession(v)
+                                // history.push(`/admin/service/notice/list?p=${v}&s=${search}`)
+                            }} />
                     </Grid>
                 </Grid>
             </Paper>
