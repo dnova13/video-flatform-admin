@@ -18,6 +18,11 @@ REACT_APP_VIDEO_URL={strming host address}
 
 ```
 
+## build
+```
+npm run build
+```
+
 ## admin account
 id : admin12  
 pw : 1q2w3e!
