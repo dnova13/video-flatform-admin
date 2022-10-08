@@ -1,16 +1,16 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 import func from "../../utils/functions";
 
 export default (props) => {
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     const [state, setState] = React.useState({});
@@ -24,15 +24,15 @@ export default (props) => {
         2: "여자"
     }
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -45,7 +45,7 @@ export default (props) => {
     const dataReq = (q) => {
         return new Promise(async (r, e) => {
 
-            if(!match.params.id){
+            if (!match.params.id) {
                 return
             }
 
@@ -81,15 +81,15 @@ export default (props) => {
 
 
     const save_notice = () => {
-        setOpen({0: false, 1: false, 2: false})
+        setOpen({ 0: false, 1: false, 2: false })
         return new Promise(async (r, e) => {
 
             let url = '/api/v1/admin/service/notice/write'
-            let data = {title: state['title'], content: state['content']}
+            let data = { title: state['title'], content: state['content'] }
 
-            if(match.params.id){
+            if (match.params.id) {
                 url = '/api/v1/admin/service/notice/modify'
-                data = {id: match.params.id, title: state['title'], content: state['content']}
+                data = { id: match.params.id, title: state['title'], content: state['content'] }
             }
 
             const headers = {
@@ -108,18 +108,18 @@ export default (props) => {
 
             openAlert("정상 처리 되었습니다")
 
-            setTimeout(function() {
+            setTimeout(function () {
                 history.push('/admin/service/notice/list')
             }, 700)
         })
     }
 
     const delete_notice = () => {
-        setOpen({0: false, 1: false, 2: false})
+        setOpen({ 0: false, 1: false, 2: false })
         return new Promise(async (r, e) => {
 
             let url = '/api/v1/admin/service/notice/delete'
-            let data = {id: match.params.id}
+            let data = { id: match.params.id }
 
             const headers = {
                 'token': window.localStorage.getItem('token'),
@@ -135,7 +135,7 @@ export default (props) => {
 
             openAlert("정상 처리 되었습니다")
 
-            setTimeout(function() {
+            setTimeout(function () {
                 history.push('/admin/service/notice/list')
             }, 700)
         })
@@ -143,7 +143,7 @@ export default (props) => {
 
     const changeValue = (e) => {
 
-        let val = {...state}
+        let val = { ...state }
 
         val[e.target.name] = e.target.value
 
@@ -154,18 +154,18 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"저장 하시겠습니까?"}
-                         fn={() => save_notice()}/>
-            <DialogAlert open={open[1]} handleClose={() => setOpen({...open, 1: false})} text={"삭제 하시겠습니까?"}
-                         fn={() => delete_notice()}/>
-            <AlertText open={open[2]} handleClose={() => setOpen({...open, 2: false})} text={text} classes={classes}/>
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"저장 하시겠습니까?"}
+                fn={() => save_notice()} />
+            <DialogAlert open={open[1]} handleClose={() => setOpen({ ...open, 1: false })} text={"삭제 하시겠습니까?"}
+                fn={() => delete_notice()} />
+            <AlertText open={open[2]} handleClose={() => setOpen({ ...open, 2: false })} text={text} classes={classes} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => {
-                                        console.log(state)
-                        }}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => {
+                                // console.log(state)
+                            }}>
                             공지사항
                         </Typography>
                     </Grid>
@@ -180,11 +180,11 @@ export default (props) => {
                                 style={
                                     {
                                         backgroundColor: '#FFAE64',
-                                        color:'black'
+                                        color: 'black'
                                     }
                                 }
                                 onClick={() => {
-                                    setOpen({...open, 0: true})
+                                    setOpen({ ...open, 0: true })
                                 }}
                             >수정</Button>
                         </Grid> : <Grid item xs={12} sm={2}> </Grid>
@@ -213,11 +213,11 @@ export default (props) => {
                                 style={
                                     {
                                         backgroundColor: '#FFAE64',
-                                        color:'black'
+                                        color: 'black'
                                     }
                                 }
                                 onClick={() => {
-                                    setOpen({...open, 0: true})
+                                    setOpen({ ...open, 0: true })
                                 }}
                             >등록</Button>
                         </Grid>
@@ -225,7 +225,7 @@ export default (props) => {
 
                     <Grid item xs={12} sm={2}>
                         <Button
-                            style={{fontWeight: 'bold', color: '#041E62', backgroundColor:'#E0E7F7'}}
+                            style={{ fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7' }}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -238,21 +238,21 @@ export default (props) => {
             </Paper>
             <TextField
                 className={classes.marginTop20}
-                style={{marginLeft: '10px'}}
+                style={{ marginLeft: '10px' }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="제목"
             />
-            <Paper className={clsx(classes.paper, classes.marginTop30)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop30)} style={{ width: '100%' }}>
                 <Grid container>
                     <Grid item xs={2}> </Grid>
                     <Grid item xs={8}>
                         <TextField
                             label="제목"
                             name="title"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             inputProps={{
                                 maxlength: 100
                             }}
@@ -260,7 +260,7 @@ export default (props) => {
                             fullWidth
                             value={state['title'] ? state['title'] : ''}
                             InputProps={{
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             onChange={(e) => {
                                 changeValue(e)
@@ -273,21 +273,21 @@ export default (props) => {
             </Paper>
             <TextField
                 className={classes.marginTop20}
-                style={{marginLeft: '10px'}}
+                style={{ marginLeft: '10px' }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="내용"
             />
-            <Paper className={clsx(classes.paper, classes.marginTop30)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop30)} style={{ width: '100%' }}>
                 <Grid container>
                     <Grid item xs={2}> </Grid>
                     <Grid item xs={8}>
                         <TextField
                             label="내용"
                             name="content"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             inputProps={{
                                 maxlength: 2730
                             }}
@@ -298,7 +298,7 @@ export default (props) => {
                             rows={20}
                             rowsMax={40}
                             InputProps={{
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             onChange={(e) => {
                                 changeValue(e)

@@ -1,16 +1,16 @@
 import clsx from 'clsx';
 
 
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 import Link from "@material-ui/core/Link";
-import {Player, ControlBar} from 'video-react';
+import { Player, ControlBar } from 'video-react';
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
@@ -22,7 +22,7 @@ import HLSSource from '../../components/HLSSource';
 
 
 export default (props) => {
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     const [state, setState] = React.useState('');
@@ -36,15 +36,15 @@ export default (props) => {
         2: "여자"
     }
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -57,7 +57,7 @@ export default (props) => {
     const dataReq = (q) => {
         return new Promise(async (r, e) => {
 
-            //  console.log("match", match)
+            //  // console.log("match", match)
 
             if (!match.params.id) {
                 return
@@ -101,9 +101,9 @@ export default (props) => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => {
-                            // console.log(state)
-                        }}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => {
+                                // // console.log(state)
+                            }}>
                             후원 정보
                         </Typography>
                     </Grid>
@@ -113,7 +113,7 @@ export default (props) => {
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Button
-                            style={{fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7'}}
+                            style={{ fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7' }}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -126,26 +126,26 @@ export default (props) => {
             </Paper>
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px'}}
+                style={{ marginLeft: '10px' }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="후원 내역"
             />
             {state ?
-                <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+                <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 label="후원일"
                                 name="date"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={state['sponsor_at'] ? state['sponsor_at'] : ''}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -158,12 +158,12 @@ export default (props) => {
                             <TextField
                                 label="회원 닉네임"
                                 name="nickname"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={state['nickname'] ? state['nickname'] : ''}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -176,12 +176,12 @@ export default (props) => {
                             <TextField
                                 label="유형"
                                 name="type"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value="크리에이터 후원"
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -194,12 +194,12 @@ export default (props) => {
                             <TextField
                                 label="후원 포인트"
                                 name="sponsor_point"
-                                InputLabelProps={{shrink: true}}
+                                InputLabelProps={{ shrink: true }}
                                 fullWidth
                                 value={state['point_quantity'] ? numberWithCommas(state['point_quantity']) + " P" : ''}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: {input: classes.paddingLT}
+                                    classes: { input: classes.paddingLT }
                                 }}
                                 style={
                                     {
@@ -222,12 +222,12 @@ export default (props) => {
                             >후원한 영상</label>
                         </Grid>
                         <Grid item xs={12} sm={5}
-                              style={{
-                                  marginTop: "0px",
-                              }}>
+                            style={{
+                                marginTop: "0px",
+                            }}>
                             <Grid container justify="center" alignItems="center" >
                                 <Player poster={process.env.REACT_APP_API_URL + state.thumbnail}
-                                        fluid={false} width="100%" height={250} controls
+                                    fluid={false} width="100%" height={250} controls
                                 >
                                     <HLSSource
                                         isVideoChild
@@ -238,24 +238,24 @@ export default (props) => {
                         </Grid>
                         <Grid item xs={12} sm={7}>
                             <TableContainer>
-                                <Table className={classes.table} style={{marginTop:"15px"}}>
+                                <Table className={classes.table} style={{ marginTop: "15px" }}>
                                     <TableBody>
                                         <TableRow>
                                             <TableCell className={classes.tableCellNotBorder} align="left"
-                                                       style={{
-                                                           fontSize:"18px",
-                                                           textDecorationLine: "underline"
-                                                       }}
+                                                style={{
+                                                    fontSize: "18px",
+                                                    textDecorationLine: "underline"
+                                                }}
                                             >
                                                 {state.title}
                                             </TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell className={classes.tableCellNotBorder} align="left"
-                                                       style={{
-                                                           fontSize:"20px",
-                                                           paddingBottom:"25px"
-                                                       }}
+                                                style={{
+                                                    fontSize: "20px",
+                                                    paddingBottom: "25px"
+                                                }}
                                             >
                                                 {state.receiver_nickname}
                                             </TableCell>
@@ -284,10 +284,10 @@ export default (props) => {
                             </TableContainer>
                         </Grid>
                     </Grid>
-                    <hr/>
+                    <hr />
                 </Paper> : ""
             }
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Typography variant="body2" color="#041E62" fontWeight="bold" align="center">
                     <Link color="inherit" href={"/admin/member/user/sponsoring/" + state.user_id}>+ 회원 포인트 후원 내역 전체
                         보기</Link>

@@ -1,20 +1,20 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
-import {makeStyles} from '@material-ui/core/styles';
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
 import flIcon from "../../flatform.png";
 
 
-import {deepOrange, deepPurple} from '@material-ui/core/colors';
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 
 import Link from "@material-ui/core/Link";
@@ -26,7 +26,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 
-import {Player} from 'video-react';
+import { Player } from 'video-react';
 import func from "../../utils/functions";
 import userIcon from "../../user.png";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -36,7 +36,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 
 export default (props) => {
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     // const ava = useStyles();
@@ -55,15 +55,15 @@ export default (props) => {
     }, [])
 
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -127,7 +127,7 @@ export default (props) => {
 
                 let urlArr = []
 
-                urlArr[0] = `/api/v1/admin/user/manage/member/detail/creatorApply?user_id=${match.params.id}`
+                urlArr[0] = `/api/v1/admin/user/manage/member/detail/creator-apply?user_id=${match.params.id}`
                 urlArr[1] = `/api/v1/admin/user/manage/member/detail/sponsored/point?user_id=${match.params.id}`
 
                 let limit = 3;
@@ -203,7 +203,7 @@ export default (props) => {
 
 
     const chkBlind = (id, _type) => {
-        setOpen({0: false, 1: false, 2: false})
+        setOpen({ 0: false, 1: false, 2: false })
 
         return new Promise(async (result, err) => {
 
@@ -244,18 +244,18 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"정지 하시겠습니까?"}
-                         fn={() => chkBlind(match.params.id, 1)}/>
-            <DialogAlert open={open[1]} handleClose={() => setOpen({...open, 1: false})} text={"정지 해제 하시겠습니까?"}
-                         fn={() => chkBlind(match.params.id, 0)}/>
-            <AlertText open={open[2]} handleClose={() => setOpen({...open, 2: false})} text={text} classes={classes}/>
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"정지 하시겠습니까?"}
+                fn={() => chkBlind(match.params.id, 1)} />
+            <DialogAlert open={open[1]} handleClose={() => setOpen({ ...open, 1: false })} text={"정지 해제 하시겠습니까?"}
+                fn={() => chkBlind(match.params.id, 0)} />
+            <AlertText open={open[2]} handleClose={() => setOpen({ ...open, 2: false })} text={text} classes={classes} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => {
-                            console.log(info)
-                        }}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => {
+                                // console.log(info)
+                            }}>
                             회원 정보
                         </Typography>
                     </Grid>
@@ -273,7 +273,7 @@ export default (props) => {
                                     }
                                 }
                                 onClick={() => {
-                                    setOpen({...open, 0: true})
+                                    setOpen({ ...open, 0: true })
                                 }}
                             >정지</Button> :
                             <Button
@@ -281,14 +281,14 @@ export default (props) => {
                                 variant="contained"
                                 color="primary"
                                 onClick={() => {
-                                    setOpen({...open, 1: true})
+                                    setOpen({ ...open, 1: true })
                                 }}
                             >정지 해제</Button>
                         }
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Button
-                            style={{fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7'}}
+                            style={{ fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7' }}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -308,41 +308,41 @@ export default (props) => {
             {/* 회원 프로필 */}
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px'}}
+                style={{ marginLeft: '10px' }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="회원 프로필"
             />
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={7}
-                          style={{
-                              padding: "20px",
+                        style={{
+                            padding: "20px",
 
-                          }}>
+                        }}>
                         <Table>
                             <TableBody>
                                 <TableRow>
                                     <TableCell className={classes.tableCellNotBorder}
-                                               width={80}
+                                        width={80}
                                     >
                                         <Avatar src={info.icon ? process.env.REACT_APP_API_URL + info.icon : ""}
-                                                style={{
-                                                    color: "white",
-                                                    width: "70px",
-                                                    height: "70px",
-                                                    // backgroundColor: deepOrange[500],
-                                                    align: 'right',
-                                                }}
+                                            style={{
+                                                color: "white",
+                                                width: "70px",
+                                                height: "70px",
+                                                // backgroundColor: deepOrange[500],
+                                                align: 'right',
+                                            }}
                                         >{info.nickname ? info.nickname.slice(0, 1) : ""}</Avatar>
                                     </TableCell>
                                     <TableCell className={classes.tableCellNotBorder}>
                                         <h3>{info.nickname}</h3>
                                         {info.is_creator ?
                                             <img width={"20px"} height={"20px"}
-                                                 src={flIcon}/> : ""
+                                                src={flIcon} /> : ""
                                         }
                                     </TableCell>
                                 </TableRow>
@@ -356,12 +356,12 @@ export default (props) => {
                         <TextField
                             label="회원 유형"
                             name="type"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['is_creator'] > 0 ? "크리에이터" : '일반'}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -374,12 +374,12 @@ export default (props) => {
                         <TextField
                             label="가입일"
                             name="date"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info.create_at}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -392,12 +392,12 @@ export default (props) => {
                         <TextField
                             label="회원 닉네임"
                             name="nickname"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info.nickname}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -410,12 +410,12 @@ export default (props) => {
                         <TextField
                             label="이름"
                             name="name"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['name'] ? info['name'] : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -428,12 +428,12 @@ export default (props) => {
                         <TextField
                             label="휴대폰 번호"
                             name="ph"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['phone'] ? info['phone'] : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -446,12 +446,12 @@ export default (props) => {
                         <TextField
                             label="이메일"
                             name="email"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['email'] ? info["email"] : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -465,12 +465,12 @@ export default (props) => {
                         <TextField
                             name="birth"
                             label="생년월일"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['birth'] ? info['birth'] : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -484,12 +484,12 @@ export default (props) => {
                         <TextField
                             label="성별"
                             name="gender"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['gender'] ? info['gender'] === 1 ? "남" : "여" : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -503,12 +503,12 @@ export default (props) => {
                         <TextField
                             label="주소"
                             name="address"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['address'] ? info['address'].replace("+", ") ").replaceAll("+", " ") : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -519,7 +519,7 @@ export default (props) => {
                         />
                     </Grid>
                 </Grid>
-                <hr/>
+                <hr />
             </Paper>
 
             {/*크레이터 정보*/
@@ -528,29 +528,29 @@ export default (props) => {
                 creator ?
                     <TextField
                         className={classes.marginTop30}
-                        style={{marginLeft: '10px', marginTop: "50px"}}
+                        style={{ marginLeft: '10px', marginTop: "50px" }}
                         InputProps={{
                             readOnly: true,
-                            disableUnderline: true, classes: {input: classes.fontSize22}
+                            disableUnderline: true, classes: { input: classes.fontSize22 }
                         }}
                         value="크리에이터 신청 정보"
                     /> : ""
             }
             {
                 creator ?
-                    <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+                    <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                         <Grid container spacing={3}>
 
                             <Grid item xs={12} sm={5}>
                                 <TextField
                                     label="이름"
                                     name="name"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={creator['name'] ? creator['name'] : ''}
                                     InputProps={{
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -565,12 +565,12 @@ export default (props) => {
                                 <TextField
                                     label="한줄 소개"
                                     name="intro"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={creator['intro'] ? creator['intro'] : ''}
                                     InputProps={{
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -583,12 +583,12 @@ export default (props) => {
                                 <TextField
                                     label="sns 주소"
                                     name="sns"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={creator.sns}
                                     InputProps={{
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -601,12 +601,12 @@ export default (props) => {
                                 <TextField
                                     label="주요 활동 지역"
                                     name="activity_region"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={creator.activity_region}
                                     InputProps={{
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -620,12 +620,12 @@ export default (props) => {
                                 <TextField
                                     label="은행명"
                                     name="bank"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={creator['bank'] ? creator['bank'] : ''}
                                     InputProps={{
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -638,12 +638,12 @@ export default (props) => {
                                 <TextField
                                     label="계좌번호"
                                     name="account"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={creator['account_num'] ? creator["account_num"] : ''}
                                     InputProps={{
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -657,12 +657,12 @@ export default (props) => {
                                 <TextField
                                     label="주요 작품 소개"
                                     name="piece"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={creator['piece'] ? creator['piece'] : ""}
                                     InputProps={{
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -676,17 +676,17 @@ export default (props) => {
                                 <TextField
                                     label="동영상 저작권 동의 여부"
                                     name="copyright"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={creator['copyright'] ? "동의" : ""}
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="end">
-                                                <CheckCircleIcon style={{ color: "#606060" }}/>
+                                                <CheckCircleIcon style={{ color: "#606060" }} />
                                             </InputAdornment>
                                         ),
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -715,27 +715,27 @@ export default (props) => {
                                         <TableRow>
 
                                             <TableCell width={"33.3%"}
-                                                       className={classes.tableCellNotBorder}
-                                                       align="left">
+                                                className={classes.tableCellNotBorder}
+                                                align="left">
                                                 {creator.images[0] ?
                                                     <img width={"100%"} height={"250px"}
-                                                         src={process.env.REACT_APP_API_URL + creator.images[0]}/>
+                                                        src={process.env.REACT_APP_API_URL + creator.images[0]} />
                                                     : ""}
                                             </TableCell>
                                             <TableCell width={"33.3%"}
-                                                       className={classes.tableCellNotBorder}
-                                                       align="left">
+                                                className={classes.tableCellNotBorder}
+                                                align="left">
                                                 {creator.images[1] ?
                                                     <img width={"100%"} height={"250px"}
-                                                         src={process.env.REACT_APP_API_URL + creator.images[1]}/>
+                                                        src={process.env.REACT_APP_API_URL + creator.images[1]} />
                                                     : ""}
                                             </TableCell>
                                             <TableCell width={"33.3%"}
-                                                       className={classes.tableCellNotBorder}
-                                                       align="left">
+                                                className={classes.tableCellNotBorder}
+                                                align="left">
                                                 {creator.images[2] ?
                                                     <img width={"100%"} height={"250px"}
-                                                         src={process.env.REACT_APP_API_URL + creator.images[2]}/>
+                                                        src={process.env.REACT_APP_API_URL + creator.images[2]} />
                                                     : ""}
                                             </TableCell>
                                         </TableRow>
@@ -744,7 +744,7 @@ export default (props) => {
 
                             </Grid>
                         </Grid>
-                        <hr/>
+                        <hr />
                     </Paper> : ""
             }
 
@@ -753,25 +753,25 @@ export default (props) => {
             }
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px', marginTop: "50px"}}
+                style={{ marginLeft: '10px', marginTop: "50px" }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="포인트"
             />
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             label="보유 포인트"
                             name="own_point"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={point ? numberWithCommas(point["total_points"]) + " P" : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -784,12 +784,12 @@ export default (props) => {
                         <TextField
                             label="사용 포인트"
                             name="using_point"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={point ? numberWithCommas(point["total_using"]) + " P" : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -799,11 +799,11 @@ export default (props) => {
                         />
                     </Grid>
                     <Paper className={clsx(classes.paper, classes.marginTop10)}
-                           style={{
-                               width: '100%',
-                               margin: '10px',
-                               marginTop: '20px'
-                           }}>
+                        style={{
+                            width: '100%',
+                            margin: '10px',
+                            marginTop: '20px'
+                        }}>
                         <Typography variant="body2" color="#041E62" fontWeight="bold" align="center">
                             {/* TODO : 회원 관리에서 한 회원의 후원한거 링크*/}
                             <Link onClick={() => {
@@ -819,26 +819,26 @@ export default (props) => {
             }
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px', marginTop: "50px"}}
+                style={{ marginLeft: '10px', marginTop: "50px" }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="후원"
             />
 
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             label="- 후원한 포인트"
                             name="sponsor_point"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={sponsoring ? numberWithCommas(sponsoring["total_sponsoring"]) + " P" : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -852,12 +852,12 @@ export default (props) => {
                         <TextField
                             label="- 영상 후원 포인트"
                             name="sponsoring_video"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={sponsoring ? numberWithCommas(sponsoring["total_sponsoring_video"]) + " P" : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -870,12 +870,12 @@ export default (props) => {
                         <TextField
                             label="- 크리에이터 후원 포인트"
                             name="sponsoring_creator"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={sponsoring ? numberWithCommas(sponsoring["total_sponsoring_creator"]) + " P" : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -885,11 +885,11 @@ export default (props) => {
                         />
                     </Grid>
                     <Paper className={clsx(classes.paper, classes.marginTop10)}
-                           style={{
-                               width: '100%',
-                               margin: '10px',
-                               marginTop: '20px'
-                           }}>
+                        style={{
+                            width: '100%',
+                            margin: '10px',
+                            marginTop: '20px'
+                        }}>
                         <Typography variant="body2" color="#041E62" fontWeight="bold" align="center">
                             {/* TODO : 회원 관리에서 한 회원의 후원한거 링크*/}
                             <Link onClick={() => {
@@ -904,18 +904,18 @@ export default (props) => {
 
             {/* 후원 받은 거*/
                 sponsored ?
-                    <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+                    <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                         <Grid container spacing={3}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     label="+ 후원 받은 포인트"
                                     name="sponsored_point"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={sponsored ? numberWithCommas(sponsored["total_sponsored"]) + " P" : ""}
                                     InputProps={{
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -929,12 +929,12 @@ export default (props) => {
                                 <TextField
                                     label="+ 영상 후원 포인트"
                                     name="sponsored_video"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={sponsored ? numberWithCommas(sponsored["total_sponsored_video"]) + " P" : ""}
                                     InputProps={{
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -947,12 +947,12 @@ export default (props) => {
                                 <TextField
                                     label="+ 크리에이터 후원 포인트"
                                     name="sponsoring_creator"
-                                    InputLabelProps={{shrink: true}}
+                                    InputLabelProps={{ shrink: true }}
                                     fullWidth
                                     value={sponsored ? numberWithCommas(sponsored["total_sponsored_creator"]) + " P" : ""}
                                     InputProps={{
                                         readOnly: true,
-                                        classes: {input: classes.paddingLT}
+                                        classes: { input: classes.paddingLT }
                                     }}
                                     style={
                                         {
@@ -962,11 +962,11 @@ export default (props) => {
                                 />
                             </Grid>
                             <Paper className={clsx(classes.paper, classes.marginTop10)}
-                                   style={{
-                                       width: '100%',
-                                       margin: '10px',
-                                       marginTop: '20px'
-                                   }}>
+                                style={{
+                                    width: '100%',
+                                    margin: '10px',
+                                    marginTop: '20px'
+                                }}>
                                 <Typography variant="body2" color="#041E62" fontWeight="bold" align="center">
                                     {/* TODO : 회원 관리에서 한 회원의 후원한거 링크*/}
                                     <Link onClick={() => {
@@ -986,17 +986,17 @@ export default (props) => {
                 video ?
                     <TextField
                         className={classes.marginTop30}
-                        style={{marginLeft: '10px', marginTop: "50px"}}
+                        style={{ marginLeft: '10px', marginTop: "50px" }}
                         InputProps={{
                             readOnly: true,
-                            disableUnderline: true, classes: {input: classes.fontSize22}
+                            disableUnderline: true, classes: { input: classes.fontSize22 }
                         }}
                         value="업로드 영상"
                     /> : ""
             }
             {
                 video ?
-                    <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+                    <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                         <Grid container spacing={3}>
                             <Grid item xs={12} sm={12}>
                                 <TableContainer>
@@ -1006,7 +1006,7 @@ export default (props) => {
                                                 <TableCell className={classes.tableCell} align="center">등록일</TableCell>
                                                 <TableCell className={classes.tableCell} align="center">작성자</TableCell>
                                                 <TableCell className={classes.tableCell} align="center"
-                                                           style={{paddingLeft: '40px'}}
+                                                    style={{ paddingLeft: '40px' }}
                                                 >제목</TableCell>
                                                 <TableCell className={classes.tableCell} align="center">조회수</TableCell>
                                                 <TableCell className={classes.tableCell} align="center">평점</TableCell>
@@ -1020,18 +1020,18 @@ export default (props) => {
                                                 <TableRow key={row.id} hover>
 
                                                     <TableCell className={classes.tableCell}
-                                                               align="center"
+                                                        align="center"
                                                     >{row.create_at}</TableCell>
                                                     <TableCell className={classes.tableCell} align="center"
                                                     >{row.nickname}</TableCell>
 
                                                     <TableCell className={classes.tableCell}
-                                                               align="left"
-                                                               style={
-                                                                   {
-                                                                       paddingTop: '10px',
-                                                                       paddingBottom: '10px'
-                                                                   }}
+                                                        align="left"
+                                                        style={
+                                                            {
+                                                                paddingTop: '10px',
+                                                                paddingBottom: '10px'
+                                                            }}
                                                     >
                                                         <TableCell
                                                             style={
@@ -1042,7 +1042,7 @@ export default (props) => {
                                                                 }}
                                                         >
                                                             <img src={process.env.REACT_APP_API_URL + row.thumbnail}
-                                                                 height="120px" width="150px"/>
+                                                                height="120px" width="150px" />
                                                         </TableCell>
                                                         <TableCell
                                                             style={
@@ -1050,12 +1050,12 @@ export default (props) => {
                                                                     paddingTop: '0px',
                                                                     paddingBottom: '0px',
                                                                     borderBottom: "0px",
-                                                                    width:"100%"
+                                                                    width: "100%"
                                                                 }}
                                                         >
                                                             <TextField
                                                                 // className={classes.marginTop30}
-                                                                style={{marginLeft: '10px'}}
+                                                                style={{ marginLeft: '10px' }}
                                                                 fullWidth
                                                                 multiline
                                                                 InputProps={{
@@ -1068,19 +1068,19 @@ export default (props) => {
                                                         </TableCell>
                                                     </TableCell>
                                                     <TableCell className={classes.tableCell}
-                                                               align="center"
+                                                        align="center"
                                                     >{row.view_cnt}</TableCell>
                                                     <TableCell className={classes.tableCell}
-                                                               align="center"
+                                                        align="center"
                                                     >{row.score}</TableCell>
                                                     <TableCell className={classes.tableCell}
-                                                               align="center"
+                                                        align="center"
                                                     >{row.like_cnt}</TableCell>
                                                     <TableCell className={classes.tableCell}
-                                                               align="center"
+                                                        align="center"
                                                     >{row.reply_cnt}</TableCell>
                                                     <TableCell className={classes.tableCell}
-                                                               align="center"
+                                                        align="center"
                                                     >{row.dibs_cnt}</TableCell>
 
                                                 </TableRow>
@@ -1091,11 +1091,11 @@ export default (props) => {
                             </Grid>
                         </Grid>
                         <Paper className={clsx(classes.paper, classes.marginTop10)}
-                               style={{
-                                   width: '100%',
-                                   margin: '00px',
-                                   marginTop: '20px'
-                               }}>
+                            style={{
+                                width: '100%',
+                                margin: '00px',
+                                marginTop: '20px'
+                            }}>
                             <Typography variant="body2" color="#041E62" fontWeight="bold" align="center">
                                 {/* TODO : 회원 관리에서 한 회원의 후원한거 링크*/}
                                 <Link onClick={() => {
@@ -1110,14 +1110,14 @@ export default (props) => {
             }
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px', marginTop: "50px"}}
+                style={{ marginLeft: '10px', marginTop: "50px" }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="작성 댓글"
             />
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={12}>
                         <TableContainer>
@@ -1126,7 +1126,7 @@ export default (props) => {
                                     <TableRow>
                                         <TableCell className={classes.tableCell} align="center">작성일</TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   style={{paddingLeft: '40px'}}
+                                            style={{ paddingLeft: '40px' }}
                                         >게시물</TableCell>
                                         <TableCell className={classes.tableCell} align="center">댓글 내용</TableCell>
                                     </TableRow>
@@ -1136,15 +1136,15 @@ export default (props) => {
                                         <TableRow key={row.id} hover>
 
                                             <TableCell className={classes.tableCell}
-                                                       align="center"
+                                                align="center"
                                             >{row.create_at}</TableCell>
                                             <TableCell className={classes.tableCell}
-                                                       align="left"
-                                                       style={
-                                                           {
-                                                               paddingTop: '10px',
-                                                               paddingBottom: '10px'
-                                                           }}
+                                                align="left"
+                                                style={
+                                                    {
+                                                        paddingTop: '10px',
+                                                        paddingBottom: '10px'
+                                                    }}
                                             >
                                                 <TableCell
                                                     style={
@@ -1155,7 +1155,7 @@ export default (props) => {
                                                         }}
                                                 >
                                                     <img src={process.env.REACT_APP_API_URL + row.thumbnail}
-                                                         height="120px" width="150px"/>
+                                                        height="120px" width="150px" />
                                                 </TableCell>
                                                 <TableCell
                                                     style={
@@ -1163,12 +1163,12 @@ export default (props) => {
                                                             paddingTop: '0px',
                                                             paddingBottom: '0px',
                                                             borderBottom: "0px",
-                                                            width:"100%"
+                                                            width: "100%"
                                                         }}
                                                 >
                                                     <TextField
                                                         // className={classes.marginTop30}
-                                                        style={{marginLeft: '10px'}}
+                                                        style={{ marginLeft: '10px' }}
                                                         fullWidth
                                                         multiline
                                                         InputProps={{
@@ -1181,12 +1181,12 @@ export default (props) => {
                                                 </TableCell>
                                             </TableCell>
                                             <TableCell className={classes.tableCell}
-                                                       align="center"
+                                                align="center"
                                             >
                                                 <TextField
                                                     InputProps={{
                                                         readOnly: true,
-                                                        disableUnderline: true, classes: {input: classes.fontSize13}
+                                                        disableUnderline: true, classes: { input: classes.fontSize13 }
                                                     }}
                                                     multiline
                                                     rows={3}
@@ -1203,11 +1203,11 @@ export default (props) => {
                     </Grid>
                 </Grid>
                 <Paper className={clsx(classes.paper, classes.marginTop10)}
-                       style={{
-                           width: '100%',
-                           margin: '00px',
-                           marginTop: '20px'
-                       }}>
+                    style={{
+                        width: '100%',
+                        margin: '00px',
+                        marginTop: '20px'
+                    }}>
                     <Typography variant="body2" color="#041E62" fontWeight="bold" align="center">
                         <Link onClick={() => {
                             removeSession()

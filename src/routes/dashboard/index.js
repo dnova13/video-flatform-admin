@@ -55,7 +55,7 @@ export default (props) => {
 
             // 그래프
             let url4 = '/api/v1/admin/statistics/day/in7days/join?date=' + now
-            let url5 = '/api/v1/admin/statistics/day/inWeek/login?date=' + now
+            let url5 = '/api/v1/admin/statistics/day/in-week/login?date=' + now
 
             let limit6 = 4;
             let limit7 = 4;

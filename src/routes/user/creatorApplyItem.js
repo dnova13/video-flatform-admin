@@ -1,21 +1,21 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
-import {makeStyles} from '@material-ui/core/styles';
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import HLSSource from '../../components/HLSSource';
 
 import flIcon from "../../flatform.png";
 
 
-import {deepOrange, deepPurple} from '@material-ui/core/colors';
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 
 import Link from "@material-ui/core/Link";
@@ -27,7 +27,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 
-import {Player} from 'video-react';
+import { Player } from 'video-react';
 import func from "../../utils/functions";
 import userIcon from "../../user.png";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -38,7 +38,7 @@ import UncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 
 export default (props) => {
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     // const ava = useStyles();
@@ -53,15 +53,15 @@ export default (props) => {
     }, [])
 
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -69,7 +69,7 @@ export default (props) => {
     const getMemberInfo = (q) => {
         return new Promise(async (r, e) => {
 
-            console.log("match", match)
+            // console.log("match", match)
 
             if (!match.params.id) {
                 return
@@ -107,18 +107,18 @@ export default (props) => {
                 }
             }
 
-            console.log(resArr);
+            // console.log(resArr);
 
             let item = resArr[0]['data'];
             setInfo(item)
 
-            console.log("creator ", resArr)
+            // console.log("creator ", resArr)
 
             if (resArr[1]["success"]) {
 
                 let item = resArr[1]["data"]
 
-                console.log(item)
+                // console.log(item)
 
                 let arr = item.account.split("+");
 
@@ -147,8 +147,8 @@ export default (props) => {
     const chkAuth = (selected, _type) => {
         return new Promise(async (result, err) => {
 
-            console.log(selected)
-            setOpen({0: false, 1: false})
+            // console.log(selected)
+            setOpen({ 0: false, 1: false })
 
             let url = _type > 0 ? "/api/v1/admin/user/manage/creator/apply/approve" : "/api/v1/admin/user/manage/creator/apply/reject"
             const headers = {
@@ -162,7 +162,7 @@ export default (props) => {
             }
 
             res = await httpRequest('POST', url, headers, JSON.stringify(data))
-            console.log(res)
+            // console.log(res)
 
             if (res['code'] > 1000) {
                 alert('실패')
@@ -186,16 +186,16 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"승인 하시겠습니까?"}
-                         fn={() => chkAuth(match.params.id, 1)}/>
-            <AlertText open={open[2]} handleClose={() => setOpen({...open, 2: false})} text={text} classes={classes}/>
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"승인 하시겠습니까?"}
+                fn={() => chkAuth(match.params.id, 1)} />
+            <AlertText open={open[2]} handleClose={() => setOpen({ ...open, 2: false })} text={text} classes={classes} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => {
-                            console.log(info)
-                        }}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => {
+                                // console.log(info)
+                            }}>
                             회원 정보
                         </Typography>
                     </Grid>
@@ -208,9 +208,9 @@ export default (props) => {
                                     fullWidth
                                     variant="contained"
                                     color="secondary"
-                                    style={{backgroundColor: '#FFAE64'}}
+                                    style={{ backgroundColor: '#FFAE64' }}
                                     onClick={() => {
-                                        setOpen({...open, 0: true})
+                                        setOpen({ ...open, 0: true })
                                     }}
                                 >승인</Button>
                                 :
@@ -219,13 +219,13 @@ export default (props) => {
                                     variant="contained"
                                     color="secondary"
                                     disabled
-                                    style={{backgroundColor: '#BDBDBD'}}
+                                    style={{ backgroundColor: '#BDBDBD' }}
                                 >승인</Button>
                             : ""}
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Button
-                            style={{fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7'}}
+                            style={{ fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7' }}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -240,38 +240,38 @@ export default (props) => {
             {/* 회원 프로필 */}
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px'}}
+                style={{ marginLeft: '10px' }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="회원 프로필"
             />
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={7}
-                          style={{
-                              padding: "20px",
+                        style={{
+                            padding: "20px",
 
-                          }}
+                        }}
                     >
                         <TableRow>
                             <TableCell className={classes.tableCellNotBorder}>
                                 <Avatar src={info.icon ? process.env.REACT_APP_API_URL + info.icon : ""}
-                                        style={{
-                                            color: "white",
-                                            width: "70px",
-                                            height: "70px",
-                                            // backgroundColor: deepOrange[500],
-                                            align: 'right',
-                                        }}
+                                    style={{
+                                        color: "white",
+                                        width: "70px",
+                                        height: "70px",
+                                        // backgroundColor: deepOrange[500],
+                                        align: 'right',
+                                    }}
                                 >{info.nickname ? info.nickname.slice(0, 1) : ""}</Avatar>
                             </TableCell>
                             <TableCell className={classes.tableCellNotBorder}>
                                 <h3>{info.nickname}</h3>
                                 {info.is_creator ?
                                     <img width={"20px"} height={"20px"}
-                                         src={flIcon}/> : ""
+                                        src={flIcon} /> : ""
                                 }
                             </TableCell>
                         </TableRow>
@@ -283,12 +283,12 @@ export default (props) => {
                         <TextField
                             label="회원 유형"
                             name="type"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['is_creator'] > 0 ? "크리에이터" : '일반'}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -301,12 +301,12 @@ export default (props) => {
                         <TextField
                             label="가입일"
                             name="date"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info.create_at}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -319,12 +319,12 @@ export default (props) => {
                         <TextField
                             label="회원 닉네임"
                             name="nickname"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info.nickname}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -337,12 +337,12 @@ export default (props) => {
                         <TextField
                             label="이름"
                             name="name"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['name'] ? info['name'] : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -355,12 +355,12 @@ export default (props) => {
                         <TextField
                             label="휴대폰 번호"
                             name="ph"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['phone'] ? info['phone'] : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -373,12 +373,12 @@ export default (props) => {
                         <TextField
                             label="이메일"
                             name="email"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['email'] ? info["email"] : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -392,12 +392,12 @@ export default (props) => {
                         <TextField
                             name="birth"
                             label="생년월일"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['birth'] ? info['birth'] : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -411,12 +411,12 @@ export default (props) => {
                         <TextField
                             label="성별"
                             name="gender"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['gender'] ? info['gender'] === 1 ? "남" : "여" : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -430,12 +430,12 @@ export default (props) => {
                         <TextField
                             label="주소"
                             name="address"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={info['address'] ? info['address'].replace("+", ") ").replaceAll("+", " ") : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -446,33 +446,33 @@ export default (props) => {
                         />
                     </Grid>
                 </Grid>
-                <hr/>
+                <hr />
             </Paper>
 
             {/*크레이터 정보*/}
 
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px', marginTop: "50px"}}
+                style={{ marginLeft: '10px', marginTop: "50px" }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="크리에이터 신청 정보"
             />
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid container spacing={3}>
 
                     <Grid item xs={12} sm={5}>
                         <TextField
                             label="이름"
                             name="name"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={creator['name'] ? creator['name'] : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -487,12 +487,12 @@ export default (props) => {
                         <TextField
                             label="한줄 소개"
                             name="intro"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={creator['intro'] ? creator['intro'] : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -505,12 +505,12 @@ export default (props) => {
                         <TextField
                             label="sns 주소"
                             name="sns"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={creator.sns}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -523,12 +523,12 @@ export default (props) => {
                         <TextField
                             label="주요 활동 지역"
                             name="activity_region"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={creator.activity_region}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -542,12 +542,12 @@ export default (props) => {
                         <TextField
                             label="은행명"
                             name="bank"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={creator['bank'] ? creator['bank'] : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -560,12 +560,12 @@ export default (props) => {
                         <TextField
                             label="계좌번호"
                             name="account"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={creator['account_num'] ? creator["account_num"] : ''}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -579,13 +579,13 @@ export default (props) => {
                         <TextField
                             label="주요 작품 소개"
                             name="piece"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             multiline={true}
                             value={creator['piece'] ? creator['piece'] : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -599,19 +599,19 @@ export default (props) => {
                         <TextField
                             label="동영상 저작권 동의 여부"
                             name="copyright"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={creator['copyright'] ? "동의" : "비동의"}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="end">
                                         {creator['copyright'] ?
-                                            <CheckCircleIcon style={{color: "#606060"}}/>
-                                            : <UncheckedIcon style={{color: "#606060"}}/>}
+                                            <CheckCircleIcon style={{ color: "#606060" }} />
+                                            : <UncheckedIcon style={{ color: "#606060" }} />}
                                     </InputAdornment>
                                 ),
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -640,34 +640,34 @@ export default (props) => {
                             <TableRow>
 
                                 <TableCell width={"33.3%"}
-                                           className={classes.tableCellNotBorder}
-                                           align="left">
+                                    className={classes.tableCellNotBorder}
+                                    align="left">
                                     {creator.images[0] ?
                                         <img width={"100%"} height={"250px"}
-                                             src={process.env.REACT_APP_API_URL + creator.images[0]}/>
+                                            src={process.env.REACT_APP_API_URL + creator.images[0]} />
                                         : ""}
                                 </TableCell>
                                 <TableCell width={"33.3%"}
-                                           className={classes.tableCellNotBorder}
-                                           align="left">
+                                    className={classes.tableCellNotBorder}
+                                    align="left">
                                     {creator.images[1] ?
                                         <img width={"100%"} height={"250px"}
-                                             src={process.env.REACT_APP_API_URL + creator.images[1]}/>
+                                            src={process.env.REACT_APP_API_URL + creator.images[1]} />
                                         : ""}
                                 </TableCell>
                                 <TableCell width={"33.3%"}
-                                           className={classes.tableCellNotBorder}
-                                           align="left">
+                                    className={classes.tableCellNotBorder}
+                                    align="left">
                                     {creator.images[2] ?
                                         <img width={"100%"} height={"250px"}
-                                             src={process.env.REACT_APP_API_URL + creator.images[2]}/>
+                                            src={process.env.REACT_APP_API_URL + creator.images[2]} />
                                         : ""}
                                 </TableCell>
                             </TableRow>
                             : <TableRow></TableRow>}
                     </Grid>
                 </Grid>
-                <hr/>
+                <hr />
             </Paper>
 
 
@@ -675,22 +675,22 @@ export default (props) => {
             {video ?
                 <TextField
                     className={classes.marginTop30}
-                    style={{marginLeft: '10px', marginTop: "50px"}}
+                    style={{ marginLeft: '10px', marginTop: "50px" }}
                     InputProps={{
                         readOnly: true,
-                        disableUnderline: true, classes: {input: classes.fontSize22}
+                        disableUnderline: true, classes: { input: classes.fontSize22 }
                     }}
                     value="업로드 영상"
                 /> : ""}
             {video ?
-                <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+                <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                     {video.map((row, idx) => (
-                        <Paper key={idx} className={clsx(classes.paper, classes.marginTop20)} style={{width: '100%'}}>
+                        <Paper key={idx} className={clsx(classes.paper, classes.marginTop20)} style={{ width: '100%' }}>
                             <Grid container spacing={3}>
                                 <Grid item xs={12} sm={6}
-                                      style={{
-                                          marginTop: "0px",
-                                      }}>
+                                    style={{
+                                        marginTop: "0px",
+                                    }}>
                                     <Grid container justify="center" alignItems="center">
                                         <Player
                                             fluid={false} width="100%" height={320} controls
@@ -708,26 +708,26 @@ export default (props) => {
                                     <Grid>
                                         <TextField
                                             label={"제목"}
-                                            style={{marginLeft: '10px', marginTop: "10px", fontWeight: "bold"}}
+                                            style={{ marginLeft: '10px', marginTop: "10px", fontWeight: "bold" }}
                                             InputProps={{
                                                 readOnly: true,
-                                                disableUnderline: true, classes: {input: classes.fontSize22}
+                                                disableUnderline: true, classes: { input: classes.fontSize22 }
                                             }}
                                             value={row.title}
                                         />
                                     </Grid>
-                                    <Grid style={{marginRight: "10px"}}>
+                                    <Grid style={{ marginRight: "10px" }}>
                                         <TextField
                                             label={"내용"}
                                             className={classes.marginTop30}
-                                            style={{marginLeft: '10px', marginTop: "40px"}}
+                                            style={{ marginLeft: '10px', marginTop: "40px" }}
                                             multiline
                                             fullWidth={true}
                                             rows={7}
                                             rowsMax={10}
                                             InputProps={{
                                                 readOnly: true,
-                                                disableUnderline: true, classes: {input: classes.fontSize22}
+                                                disableUnderline: true, classes: { input: classes.fontSize22 }
                                             }}
                                             value={row.content}
                                         />

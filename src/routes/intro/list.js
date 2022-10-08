@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from "prop-types";
 
 
@@ -20,12 +20,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from "@material-ui/core/Button";
 import ClearIcon from "@material-ui/icons/Clear";
-import {httpRequest} from "../../utils/httpReq";
-import {Pagination} from "@material-ui/lab";
+import { httpRequest } from "../../utils/httpReq";
+import { Pagination } from "@material-ui/lab";
 import Checkbox from "@material-ui/core/Checkbox";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 
 import Toolbar from "@material-ui/core/Toolbar";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -203,9 +203,9 @@ export default (props) => {
 
     const openAlert = (text) => {
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -225,7 +225,7 @@ export default (props) => {
             for (let item of selected) {
 
                 let data = {
-                    id : item
+                    id: item
                 }
 
                 //  console.log(data);
@@ -237,7 +237,7 @@ export default (props) => {
                 }
             }
 
-            console.log(res)
+            // console.log(res)
 
             setOpen(false)
             // openAlert("정상 처리 되었습니다")
@@ -251,12 +251,12 @@ export default (props) => {
     return (
         <>
             <DialogAlert open={open} handleClose={() => setOpen(false)} text={"삭제 하시겠습니까?"}
-                         fn={() => delete_post(selected)}/>
+                fn={() => delete_post(selected)} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={8}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => console.log('a')}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => { }}>
                             소개서 업로드
                         </Typography>
                     </Grid>
@@ -312,11 +312,11 @@ export default (props) => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <Search/>
+                                        <Search />
                                     </InputAdornment>
                                 ), endAdornment: (
                                     <IconButton position="end" onClick={() => setSearch('')}>
-                                        <ClearIcon/>
+                                        <ClearIcon />
                                     </IconButton>
                                 ),
                             }}
@@ -335,7 +335,7 @@ export default (props) => {
                                             indeterminate={selected.length > 0 && selected.length < state.length}
                                             checked={state.length > 0 && selected.length === state.length}
                                             onChange={handleSelectAllClick}
-                                            inputProps={{"aria-label": "select all post"}}
+                                            inputProps={{ "aria-label": "select all post" }}
                                             color="primary"
                                         />
                                     </TableCell>
@@ -351,24 +351,24 @@ export default (props) => {
                                     <TableRow key={row.id} hover>
                                         <TableCell padding="checkbox">
                                             <YellowCheckbox
-                                                inputProps={{"aria-labelledby": `enhanced-table-checkbox-${index}`}}
+                                                inputProps={{ "aria-labelledby": `enhanced-table-checkbox-${index}` }}
                                                 onClick={(e) => handleClick(e, row.id)}
                                                 checked={isSelected(row.id)}
                                             />
                                         </TableCell>
                                         {/*<TableCell className={classes.tableCell} align="center" onClick={() => moreBtnHandler(row)}>{row.id}</TableCell>*/}
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={() => moreBtnHandler(row)}>{row.create_at}</TableCell>
+                                            align="center"
+                                            onClick={() => moreBtnHandler(row)}>{row.create_at}</TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   onClick={() => moreBtnHandler(row)}>{row.title}</TableCell>
+                                            onClick={() => moreBtnHandler(row)}>{row.title}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
+                                            align="center"
                                                    /*onClick={() => moreBtnHandler(row)}*/>
-                                            <Link href={row.file ? process.env.REACT_APP_API_URL+row.file : ""} >{row.name}</Link>
+                                            <Link href={row.file ? process.env.REACT_APP_API_URL + row.file : ""} >{row.name}</Link>
                                         </TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   onClick={() => moreBtnHandler(row)}>{"관리자"}</TableCell>
+                                            onClick={() => moreBtnHandler(row)}>{"관리자"}</TableCell>
 
                                     </TableRow>
                                 )) : <TableRow></TableRow>}
@@ -377,17 +377,17 @@ export default (props) => {
                     </TableContainer>
                 </Grid>
             </Grid>
-            <Grid container direction="column-reverse" alignItems="flex-end" style={{paddingTop: '20px'}}>
+            <Grid container direction="column-reverse" alignItems="flex-end" style={{ paddingTop: '20px' }}>
                 <Grid item xs={12}>
                     <Pagination count={total} page={page} size="large" variant="outlined" shape="rounded"
-                                color="primary"
-                                onChange={(e, v) => {
+                        color="primary"
+                        onChange={(e, v) => {
 
-                                    // console.log("v", v)
-                                    setPage(v)
-                                    setSession(v)
-                                    // history.push(`/admin/service/intro/list?p=${v}&s=${search}`)
-                                }}/>
+                            // console.log("v", v)
+                            setPage(v)
+                            setSession(v)
+                            // history.push(`/admin/service/intro/list?p=${v}&s=${search}`)
+                        }} />
                 </Grid>
             </Grid>
         </>

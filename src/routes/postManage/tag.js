@@ -1,14 +1,14 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
-import {makeStyles} from '@material-ui/core/styles';
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
+import { makeStyles } from '@material-ui/core/styles';
 
 
 import Tabs from "@material-ui/core/Tabs";
@@ -21,7 +21,7 @@ import InputBase from "@material-ui/core/InputBase";
 import IconEdit from "../../edit.png";
 
 
-import {deepOrange, deepPurple} from '@material-ui/core/colors';
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 
 import Link from "@material-ui/core/Link";
@@ -99,7 +99,7 @@ export default (props) => {
 
     const CHARACTER_LIMIT = 100;
 
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const tabStyle = useStyles();
     const tagInput = tagInputStyles();
@@ -119,15 +119,15 @@ export default (props) => {
         getTags()
     }, [menu])
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -145,7 +145,7 @@ export default (props) => {
                 }
 
                 const res = await httpRequest('GET', url, headers, null)
-                console.log(res);
+                // console.log(res);
 
                 if (!res['success']) {
                     if (res['code'] !== 1001) {
@@ -173,7 +173,7 @@ export default (props) => {
                     arr.push(tag)
                 }
 
-                console.log(arr);
+                // console.log(arr);
 
                 setState(arr)
             }
@@ -203,7 +203,7 @@ export default (props) => {
 
         if (selectedIndex === -1) {
 
-            console.log("!!!!")
+            // console.log("!!!!")
             newSelected = newSelected.concat(selected, name);
         }
 
@@ -216,7 +216,7 @@ export default (props) => {
 
 
     const chkSave = (id, _type) => {
-        setOpen({0: false, 1: false, 2: false})
+        setOpen({ 0: false, 1: false, 2: false })
 
         return new Promise(async (result, err) => {
 
@@ -231,10 +231,10 @@ export default (props) => {
 
             if (arrTag.length < 1) {
                 alert("태그를 등록하세요.")
-                return ;
+                return;
             }
 
-            let url = menu === 1 ? "/api/v1/admin/tags/com/register" : "/api/v1/admin/tags/recommend/register"
+            let url = menu === 1 ? "/api/v1/admin/tags/owner/register" : "/api/v1/admin/tags/recommend/register"
             const headers = {
                 'token': window.localStorage.getItem('token'),
                 'Content-type': 'application/json; charset=utf-8'
@@ -280,15 +280,15 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"저장 하시겠습니까?"}
-                         fn={() => chkSave(idx, 1)}/>
-            <AlertText open={open[2]} handleClose={() => setOpen({...open, 2: false})} text={text} classes={classes}/>
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"저장 하시겠습니까?"}
+                fn={() => chkSave(idx, 1)} />
+            <AlertText open={open[2]} handleClose={() => setOpen({ ...open, 2: false })} text={text} classes={classes} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => {
-                        }}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => {
+                            }}>
                             해시 태그 관리
                         </Typography>
                     </Grid>
@@ -305,14 +305,14 @@ export default (props) => {
                                 }
                             }
                             onClick={() => {
-                                setOpen({...open, 0: true})
+                                setOpen({ ...open, 0: true })
                             }}
                         >저장</Button>
                     </Grid>
                 </Grid>
             </Paper>
 
-            <Grid container spacing={1} style={{marginTop: "30px"}}>
+            <Grid container spacing={1} style={{ marginTop: "30px" }}>
                 <Grid item xs={12} sm={3}>
                     <div className={tabStyle.root}>
                         <Tabs
@@ -325,22 +325,22 @@ export default (props) => {
                             indicatorColor={""}
                         >
                             <Tab label="관리자 추천 태그"
-                                 {...a11yProps(1)}
-                                 className={tabStyle.tab}
-                                 style={{
-                                     borderBottom: `1px solid rgba(0, 0, 0, 0.12)`,
-                                 }}
-                                 onClick={() => {
-                                     history.push('/admin/post/tag/recommend')
-                                 }}
+                                {...a11yProps(1)}
+                                className={tabStyle.tab}
+                                style={{
+                                    borderBottom: `1px solid rgba(0, 0, 0, 0.12)`,
+                                }}
+                                onClick={() => {
+                                    history.push('/admin/post/tag/recommend')
+                                }}
                             />
                             <Tab label="영상 해시 태그"
-                                 className={tabStyle.tab}
-                                 {...a11yProps(2)}
+                                className={tabStyle.tab}
+                                {...a11yProps(2)}
                                 onClick={() => {
                                     history.push('/admin/post/tag/com')
                                 }}
-                                // className={tabStyle.tab}
+                            // className={tabStyle.tab}
                             />
                         </Tabs>
 
@@ -348,41 +348,41 @@ export default (props) => {
                 </Grid>
                 <Grid item xs={12} sm={9}>
                     <Paper className={clsx(classes.paper)}
-                           style={{
-                               width: '100%',
-                               backgroundColor: '#F5F5F5'
-                           }}>
+                        style={{
+                            width: '100%',
+                            backgroundColor: '#F5F5F5'
+                        }}>
                         {state ? state.map((tag, idx) => (
                             <Paper key={idx}
                                 // component="form"
-                                   className={tagInput.root}
-                                   style={{
-                                       marginBottom: "10px",
-                                   }}
-                                   onClick={(e) => {
-                                       // e.preventDefault();
-                                       // console.log(document.getElementById("tag"))
-                                       let pen = document.querySelectorAll(".pencil");
-                                       let paper = document.querySelectorAll(".MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-9 > div > div");
+                                className={tagInput.root}
+                                style={{
+                                    marginBottom: "10px",
+                                }}
+                                onClick={(e) => {
+                                    // e.preventDefault();
+                                    // console.log(document.getElementById("tag"))
+                                    let pen = document.querySelectorAll(".pencil");
+                                    let paper = document.querySelectorAll(".MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-sm-9 > div > div");
 
-                                       paper.forEach((tag, i) => {
-                                           tag.style.backgroundColor = "white"
-                                           pen[i].style.backgroundColor = "#FFEDDD"
-                                       })
-                                       paper[idx].style.backgroundColor = "#FFEDDD";
-                                       pen[idx].style.backgroundColor = "white"
-                                   }}
+                                    paper.forEach((tag, i) => {
+                                        tag.style.backgroundColor = "white"
+                                        pen[i].style.backgroundColor = "#FFEDDD"
+                                    })
+                                    paper[idx].style.backgroundColor = "#FFEDDD";
+                                    pen[idx].style.backgroundColor = "white"
+                                }}
                             >
                                 <Avatar src={IconEdit}
-                                        className={"pencil"}
-                                        style={{
-                                            color: "white",
-                                            width: "40px",
-                                            height: "40px",
-                                            backgroundColor: "#FFEDDD",
-                                            marginBottom: "10px",
+                                    className={"pencil"}
+                                    style={{
+                                        color: "white",
+                                        width: "40px",
+                                        height: "40px",
+                                        backgroundColor: "#FFEDDD",
+                                        marginBottom: "10px",
 
-                                        }}>
+                                    }}>
                                 </Avatar>
                                 <TextField
                                     name={"tag"}
@@ -418,12 +418,12 @@ export default (props) => {
                                         let arr = [...state]
 
                                         arr.splice(idx, 1);
-                                        arr.push({id: null, tag: ""})
+                                        arr.push({ id: null, tag: "" })
 
                                         setState(arr);
                                     }}
                                 >
-                                    <CloseIcon/>
+                                    <CloseIcon />
                                 </IconButton>
                             </Paper>
                         )) : ""}

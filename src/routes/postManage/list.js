@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from "prop-types";
 
 
@@ -20,12 +20,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from "@material-ui/core/Button";
 import ClearIcon from "@material-ui/icons/Clear";
-import {httpRequest} from "../../utils/httpReq";
-import {Pagination} from "@material-ui/lab";
+import { httpRequest } from "../../utils/httpReq";
+import { Pagination } from "@material-ui/lab";
 import Checkbox from "@material-ui/core/Checkbox";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 
 import Toolbar from "@material-ui/core/Toolbar";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -69,7 +69,7 @@ export default (props) => {
     const [selected, setSelected] = React.useState([]);
     const [dense, setDense] = React.useState(false);
 
-    const [open, setOpen] = React.useState({0: false, 1: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false })
     const [text, setText] = React.useState('')
 
     const [type, setType] = React.useState(status_chk('type') ? parseInt(window.sessionStorage.getItem('type')) : 0);
@@ -212,15 +212,15 @@ export default (props) => {
 
     const openAlert = (text) => {
         setText(text)
-        setOpen({0: false, 1: false})
+        setOpen({ 0: false, 1: false })
         setTimeout(function () {
-            setOpen({0: false, 1: false})
+            setOpen({ 0: false, 1: false })
         }, 700);
     }
 
     const handleSelChange = (event) => {
 
-        console.log(event.target.value)
+        // console.log(event.target.value)
 
         setType(event.target.value);
         setPage(1)
@@ -230,7 +230,7 @@ export default (props) => {
     const chkBlind = (selected, _type) => {
         return new Promise(async (result, err) => {
 
-            console.log(selected)
+            // console.log(selected)
 
             let url = _type > 0 ? "/api/v1/admin/report/chk/blind/video" : "/api/v1/admin/report/unchk/blind/video"
             const headers = {
@@ -247,7 +247,7 @@ export default (props) => {
                     where: "video"
                 }
 
-                console.log(data);
+                // console.log(data);
                 res = await httpRequest('POST', url, headers, JSON.stringify(data))
 
                 if (res['code'] > 1000) {
@@ -256,8 +256,8 @@ export default (props) => {
                 }
             }
 
-            console.log(res)
-            setOpen({0: false, 1: false})
+            // console.log(res)
+            setOpen({ 0: false, 1: false })
             // openAlert("정상 처리 되었습니다")
 
             setTimeout(function () {
@@ -269,16 +269,16 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"블라인드 하시겠습니까?"}
-                         fn={() => chkBlind(selected, 1)}/>
-            <DialogAlert open={open[1]} handleClose={() => setOpen({...open, 1: false})} text={"블라인드 해제 하시겠습니까?"}
-                         fn={() => chkBlind(selected, 0)}/>
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"블라인드 하시겠습니까?"}
+                fn={() => chkBlind(selected, 1)} />
+            <DialogAlert open={open[1]} handleClose={() => setOpen({ ...open, 1: false })} text={"블라인드 해제 하시겠습니까?"}
+                fn={() => chkBlind(selected, 0)} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => console.log('a')}>
-                            게시물 목록 <span style={{color:"#A6A6A6", fontSize:"18px"}}> (총 {listTotal}개)</span>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => { }}>
+                            게시물 목록 <span style={{ color: "#A6A6A6", fontSize: "18px" }}> (총 {listTotal}개)</span>
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={2}>
@@ -296,7 +296,7 @@ export default (props) => {
                             }
                             onClick={() => {
                                 if (selected.length > 0) {
-                                    setOpen({...open, 0: true})
+                                    setOpen({ ...open, 0: true })
                                 }
                             }}
                         >블라인드</Button>
@@ -308,7 +308,7 @@ export default (props) => {
                             color="primary"
                             onClick={() => {
                                 if (selected.length > 0) {
-                                    setOpen({...open, 1: true})
+                                    setOpen({ ...open, 1: true })
                                 }
                             }}
                         >블라인드 해제</Button>
@@ -338,11 +338,11 @@ export default (props) => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <Search/>
+                                        <Search />
                                     </InputAdornment>
                                 ), endAdornment: (
                                     <IconButton position="end" onClick={() => setSearch('')}>
-                                        <ClearIcon/>
+                                        <ClearIcon />
                                     </IconButton>
                                 ),
                             }}
@@ -361,14 +361,14 @@ export default (props) => {
                                             indeterminate={selected.length > 0 && selected.length < state.length}
                                             checked={state.length > 0 && selected.length === state.length}
                                             onChange={handleSelectAllClick}
-                                            inputProps={{"aria-label": "select all post"}}
+                                            inputProps={{ "aria-label": "select all post" }}
                                             color="primary"
                                         />
                                     </TableCell>
                                     <TableCell className={classes.tableCell} align="center">등록일</TableCell>
                                     <TableCell className={classes.tableCell} align="center">작성자</TableCell>
                                     <TableCell className={classes.tableCell} align="center"
-                                               style={{paddingLeft: '40px'}}
+                                        style={{ paddingLeft: '40px' }}
                                     >제목</TableCell>
                                     <TableCell className={classes.tableCell} align="center">조회수</TableCell>
                                     <TableCell className={classes.tableCell} align="center">평점</TableCell>
@@ -383,28 +383,28 @@ export default (props) => {
                                     <TableRow key={row.id} hover>
                                         <TableCell padding="checkbox">
                                             <YellowCheckbox
-                                                inputProps={{"aria-labelledby": `enhanced-table-checkbox-${index}`}}
+                                                inputProps={{ "aria-labelledby": `enhanced-table-checkbox-${index}` }}
                                                 onClick={(e) => handleClick(e, row.id)}
                                                 checked={isSelected(row.id)}
                                             />
                                         </TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={() => moreBtnHandler(row)}
+                                            align="center"
+                                            onClick={() => moreBtnHandler(row)}
                                         >{row.create_at}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={() => moreBtnHandler(row)}
+                                            align="center"
+                                            onClick={() => moreBtnHandler(row)}
                                         >{row.nickname}</TableCell>
 
                                         <TableCell className={classes.tableCell}
-                                                   align="left"
-                                                   style={
-                                                       {
-                                                           paddingTop: '10px',
-                                                           paddingBottom: '10px'
-                                                       }}
-                                                   onClick={() => moreBtnHandler(row)}
+                                            align="left"
+                                            style={
+                                                {
+                                                    paddingTop: '10px',
+                                                    paddingBottom: '10px'
+                                                }}
+                                            onClick={() => moreBtnHandler(row)}
                                         >
                                             <TableCell
                                                 style={
@@ -416,7 +416,7 @@ export default (props) => {
                                                 onClick={() => moreBtnHandler(row)}
                                             >
                                                 <img src={process.env.REACT_APP_API_URL + row.thumbnail}
-                                                     height="100px" width="120px"/>
+                                                    height="100px" width="120px" />
                                             </TableCell>
                                             <TableCell
                                                 onClick={() => moreBtnHandler(row)}
@@ -425,12 +425,12 @@ export default (props) => {
                                                         paddingTop: '0px',
                                                         paddingBottom: '0px',
                                                         borderBottom: "0px",
-                                                        width:"100%"
+                                                        width: "100%"
                                                     }}
                                             >
                                                 <TextField
                                                     // className={classes.marginTop30}
-                                                    style={{marginLeft: '10px'}}
+                                                    style={{ marginLeft: '10px' }}
                                                     fullWidth
                                                     multiline
                                                     InputProps={{
@@ -443,42 +443,42 @@ export default (props) => {
                                             </TableCell>
                                         </TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={() => moreBtnHandler(row)}
+                                            align="center"
+                                            onClick={() => moreBtnHandler(row)}
                                         >{row.view_cnt}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={() => moreBtnHandler(row)}
+                                            align="center"
+                                            onClick={() => moreBtnHandler(row)}
                                         >{row.score}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={() => moreBtnHandler(row)}
+                                            align="center"
+                                            onClick={() => moreBtnHandler(row)}
                                         >{row.like_cnt}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={() => moreBtnHandler(row)}
+                                            align="center"
+                                            onClick={() => moreBtnHandler(row)}
                                         >{row.reply_cnt}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={() => moreBtnHandler(row)}
+                                            align="center"
+                                            onClick={() => moreBtnHandler(row)}
                                         >{row.dibs_cnt}</TableCell>
 
                                         {row.blind_chk ?
                                             <TableCell className={classes.tableCell} align="center"
-                                                       onClick={() => moreBtnHandler(row)}
-                                                       style={
-                                                           {
-                                                               color: '#FFAE64',
-                                                               fontWeight: 'bold'
-                                                           }}
+                                                onClick={() => moreBtnHandler(row)}
+                                                style={
+                                                    {
+                                                        color: '#FFAE64',
+                                                        fontWeight: 'bold'
+                                                    }}
                                             >블라인드</TableCell> :
                                             <TableCell className={classes.tableCell} align="center"
-                                                       onClick={() => moreBtnHandler(row)}
-                                                       style={
-                                                           {
-                                                               color: '#041E62',
-                                                               fontWeight: 'bold'
-                                                           }}
+                                                onClick={() => moreBtnHandler(row)}
+                                                style={
+                                                    {
+                                                        color: '#041E62',
+                                                        fontWeight: 'bold'
+                                                    }}
                                             >공개</TableCell>
                                         }
                                     </TableRow>
@@ -488,17 +488,17 @@ export default (props) => {
                     </TableContainer>
                 </Grid>
             </Grid>
-            <Grid container direction="column-reverse" alignItems="flex-end" style={{paddingTop: '20px'}}>
+            <Grid container direction="column-reverse" alignItems="flex-end" style={{ paddingTop: '20px' }}>
                 <Grid item xs={12}>
                     <Pagination count={total} page={page} size="large" variant="outlined" shape="rounded"
-                                color="primary"
-                                onChange={(e, v) => {
+                        color="primary"
+                        onChange={(e, v) => {
 
-                                    console.log("v", v)
-                                    setPage(v)
-                                    setSession(v)
-                                    // history.push(`/admin/service/notice/list?p=${v}&s=${search}`)
-                                }}/>
+                            // console.log("v", v)
+                            setPage(v)
+                            setSession(v)
+                            // history.push(`/admin/service/notice/list?p=${v}&s=${search}`)
+                        }} />
                 </Grid>
             </Grid>
         </>

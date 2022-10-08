@@ -1,20 +1,20 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
-import {makeStyles} from '@material-ui/core/styles';
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
 import flIcon from "../../flatform.png";
 
 
-import {deepOrange, deepPurple} from '@material-ui/core/colors';
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 
 import Link from "@material-ui/core/Link";
@@ -26,7 +26,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 
-import {Player} from 'video-react';
+import { Player } from 'video-react';
 import func from "../../utils/functions";
 import userIcon from "../../user.png";
 import Select from "@material-ui/core/Select";
@@ -35,14 +35,14 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Search from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
-import {Pagination} from "@material-ui/lab";
+import { Pagination } from "@material-ui/lab";
 
 // import 'video-react/dist/video-react.css';
 
 
 export default (props) => {
 
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     // const ava = useStyles();
@@ -69,15 +69,15 @@ export default (props) => {
     }, [page, total, type])
 
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -235,7 +235,7 @@ export default (props) => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} >
+                            style={{ paddingTop: '5px', margin: 0 }} >
                             포인트 내역
                         </Typography>
                     </Grid>
@@ -245,7 +245,7 @@ export default (props) => {
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Button
-                            style={{fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7'}}
+                            style={{ fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7' }}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -259,25 +259,25 @@ export default (props) => {
             {/* 포인트 정보 */}
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px', marginTop: "50px"}}
+                style={{ marginLeft: '10px', marginTop: "50px" }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="포인트"
             />
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             label="보유 포인트"
                             name="own_point"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={point ? numberWithCommas(point["total_points"]) + " P" : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -290,12 +290,12 @@ export default (props) => {
                         <TextField
                             label="사용 포인트"
                             name="using_point"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             fullWidth
                             value={point ? numberWithCommas(point["total_using"]) + " P" : ""}
                             InputProps={{
                                 readOnly: true,
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             style={
                                 {
@@ -343,20 +343,20 @@ export default (props) => {
                                     <TableRow key={row.id} hover>
 
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   >{row.create_at}</TableCell>
+                                            align="center"
+                                        >{row.create_at}</TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   >{row.type === 1 ? "충전" : row.type === 2 ? "후원" : row.type === 3 ? "정산" : ""}</TableCell>
+                                        >{row.type === 1 ? "충전" : row.type === 2 ? "후원" : row.type === 3 ? "정산" : ""}</TableCell>
 
                                         <TableCell className={classes.tableCell}
-                                                   align="center">
+                                            align="center">
                                             {row.type === 1 ? `포인트 충전 (${row.detail})`
                                                 : row.type === 2 ? `${row.detail} 에게 후원`
-                                                : row.type === 3 ? `${row.detail}` : ""}
+                                                    : row.type === 3 ? `${row.detail}` : ""}
                                         </TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   >{ (row.type === 1 ? "+ " : "- ") + numberWithCommas(row.point_quantity) + " P"}</TableCell>
+                                            align="center"
+                                        >{(row.type === 1 ? "+ " : "- ") + numberWithCommas(row.point_quantity) + " P"}</TableCell>
 
                                     </TableRow>
                                 )) : <TableRow></TableRow>}
@@ -365,17 +365,17 @@ export default (props) => {
                     </TableContainer>
                 </Grid>
             </Grid>
-            <Grid container direction="column-reverse" alignItems="flex-end" style={{paddingTop: '20px'}}>
+            <Grid container direction="column-reverse" alignItems="flex-end" style={{ paddingTop: '20px' }}>
                 <Grid item xs={12}>
                     <Pagination count={total} page={page} size="large" variant="outlined" shape="rounded"
-                                color="primary"
-                                onChange={(e, v) => {
+                        color="primary"
+                        onChange={(e, v) => {
 
-                                    console.log("v", v)
-                                    setPage(v)
-                                    setSession(v)
-                                    // history.push(`/admin/earnings/sponsor/list?p=${v}&s=${search}`)
-                                }}/>
+                            // console.log("v", v)
+                            setPage(v)
+                            setSession(v)
+                            // history.push(`/admin/earnings/sponsor/list?p=${v}&s=${search}`)
+                        }} />
                 </Grid>
             </Grid>
         </>

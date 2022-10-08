@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 import Moment from 'moment';
 import 'moment/locale/ko';
@@ -8,9 +8,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
-import {makeStyles} from '@material-ui/core/styles';
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
 import ReplyIcon from '@material-ui/icons/SubdirectoryArrowRight';
@@ -25,7 +25,7 @@ import iconPoint from "../../point.png";
 import iconReplyWr from "../../replyWrite.png";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
-import {deepOrange, deepPurple} from '@material-ui/core/colors';
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 
 import Link from "@material-ui/core/Link";
@@ -38,7 +38,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableContainer from "@material-ui/core/TableContainer";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
-import {Player} from 'video-react';
+import { Player } from 'video-react';
 import func from "../../utils/functions";
 import userIcon from "../../user.png";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -51,7 +51,7 @@ import HLSSource from '../../components/HLSSource';
 
 
 export default (props) => {
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     // const ava = useStyles();
@@ -74,15 +74,15 @@ export default (props) => {
     }, [offset, success, limit])
 
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false, 3: false, 4: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false, 3: false, 4: false })
     const [text, setText] = React.useState('')
 
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true, 3: false, 4: false})
+        setOpen({ 0: false, 1: false, 2: true, 3: false, 4: false })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false, 3: false, 4: false})
+            setOpen({ 0: false, 1: false, 2: false, 3: false, 4: false })
         }, 700);
     }
 
@@ -172,7 +172,7 @@ export default (props) => {
             setReLv0Total(result['re_total'] ? result["re_total"] : 0)
             setReTotal(result['total'] ? result['total'] : 0)
 
-            console.log(result)
+            // console.log(result)
         })
     }
 
@@ -186,11 +186,11 @@ export default (props) => {
 
 
     const chkBlind = (id, _type) => {
-        setOpen({0: false, 1: false, 2: false, 3: false, 4: false})
+        setOpen({ 0: false, 1: false, 2: false, 3: false, 4: false })
 
         return new Promise(async (result, err) => {
 
-            console.log(id)
+            // console.log(id)
 
             let url = _type > 0 ? "/api/v1/admin/report/chk/blind/video" : "/api/v1/admin/report/unchk/blind/video"
             const headers = {
@@ -204,7 +204,7 @@ export default (props) => {
                 where: "video"
             }
 
-            console.log(data);
+            // console.log(data);
             res = await httpRequest('POST', url, headers, JSON.stringify(data))
 
 
@@ -221,10 +221,10 @@ export default (props) => {
     }
 
     const chkReplyBlind = (id, _type) => {
-        setOpen({0: false, 1: false, 2: false, 3: false, 4: false})
+        setOpen({ 0: false, 1: false, 2: false, 3: false, 4: false })
         return new Promise(async (result, err) => {
 
-            console.log(id)
+            // console.log(id)
 
             let url = _type > 0 ? "/api/v1/admin/post/manage/chk/blind/reply" : "/api/v1/admin/post/manage/unchk/blind/reply"
             const headers = {
@@ -237,17 +237,17 @@ export default (props) => {
                 id: id
             }
 
-            console.log(data);
+            // console.log(data);
             res = await httpRequest('POST', url, headers, JSON.stringify(data))
 
-            console.log(res)
+            // console.log(res)
 
             if (res['code'] > 1000) {
                 alert('실패')
                 return
             }
 
-            console.log(res)
+            // console.log(res)
             openAlert("정상 처리 되었습니다")
             setTimeout(function () {
                 // window.location.reload()
@@ -265,20 +265,20 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"블라인드 하시겠습니까?"}
-                         fn={(e) => chkBlind(match.params.id, 1)
-                         }/>
-            <DialogAlert open={open[1]} handleClose={() => setOpen({...open, 1: false})} text={"블라인드 해제 하시겠습니까?"}
-                         fn={(e) => chkBlind(match.params.id, 0)
-                         }
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"블라인드 하시겠습니까?"}
+                fn={(e) => chkBlind(match.params.id, 1)
+                } />
+            <DialogAlert open={open[1]} handleClose={() => setOpen({ ...open, 1: false })} text={"블라인드 해제 하시겠습니까?"}
+                fn={(e) => chkBlind(match.params.id, 0)
+                }
             />
-            <AlertText open={open[2]} handleClose={() => setOpen({...open, 2: false})} text={text} classes={classes}/>
-            <DialogAlert open={open[3]} handleClose={() => setOpen({...open, 3: false})} text={"블라인드 하시겠습니까?"}
-                         fn={(e) => chkReplyBlind(reId, 1)
-                         }/>
-            <DialogAlert open={open[4]} handleClose={() => setOpen({...open, 4: false})} text={"블라인드 해제 하시겠습니까?"}
-                         fn={(e) => chkReplyBlind(reId, 0)
-                         }
+            <AlertText open={open[2]} handleClose={() => setOpen({ ...open, 2: false })} text={text} classes={classes} />
+            <DialogAlert open={open[3]} handleClose={() => setOpen({ ...open, 3: false })} text={"블라인드 하시겠습니까?"}
+                fn={(e) => chkReplyBlind(reId, 1)
+                } />
+            <DialogAlert open={open[4]} handleClose={() => setOpen({ ...open, 4: false })} text={"블라인드 해제 하시겠습니까?"}
+                fn={(e) => chkReplyBlind(reId, 0)
+                }
             />
 
             {post ?
@@ -287,19 +287,19 @@ export default (props) => {
                         <Grid container spacing={3}>
                             <Grid item xs={12} sm={6}>
                                 <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                            style={{paddingTop: '5px', margin: 0}} onClick={() => {
-                                }}>
+                                    style={{ paddingTop: '5px', margin: 0 }} onClick={() => {
+                                    }}>
                                     게시물 조회
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} sm={1}>
                             </Grid>
                             <Grid item xs={12} sm={3}
-                                  style={
-                                      {
-                                          textAlign: "right"
-                                      }
-                                  }
+                                style={
+                                    {
+                                        textAlign: "right"
+                                    }
+                                }
                             >
                                 {!post.blind_chk ?
                                     <Button
@@ -312,7 +312,7 @@ export default (props) => {
                                             }
                                         }
                                         onClick={() => {
-                                            setOpen({...open, 0: true})
+                                            setOpen({ ...open, 0: true })
                                         }}
                                     >블라인드</Button> :
                                     <Button
@@ -320,14 +320,14 @@ export default (props) => {
                                         variant="contained"
                                         color="primary"
                                         onClick={() => {
-                                            setOpen({...open, 1: true})
+                                            setOpen({ ...open, 1: true })
                                         }}
                                     >블라인드 해제</Button>
                                 }
                             </Grid>
                             <Grid item xs={12} sm={2}>
                                 <Button
-                                    style={{fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7'}}
+                                    style={{ fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7' }}
                                     type="submit"
                                     fullWidth
                                     variant="contained"
@@ -342,9 +342,9 @@ export default (props) => {
                         </Grid>
                     </Paper>
                     <Paper className={classes.paper}
-                           style={{marginTop: "10px", padding: "30px"}}>
+                        style={{ marginTop: "10px", padding: "30px" }}>
                         <Grid container justify="center"
-                              alignItems="center">
+                            alignItems="center">
                             <Player
                                 fluid={false} width="100%" height={400} aspectRatio={"16:9"} controls
                                 poster={process.env.REACT_APP_API_URL + post.thumbnail}
@@ -359,11 +359,11 @@ export default (props) => {
 
                     {/* 영상 정보 */}
                     <Grid className={classes.tableWrap}
-                          style={{
-                              paddingLeft: "20px",
-                              paddingRight: "20px",
-                              marginTop: "10px"
-                          }}
+                        style={{
+                            paddingLeft: "20px",
+                            paddingRight: "20px",
+                            marginTop: "10px"
+                        }}
                     >
                         {/* 영상 타이틀*/}
                         <Table>
@@ -373,7 +373,7 @@ export default (props) => {
                                         <TextField
                                             InputProps={{
                                                 readOnly: true,
-                                                disableUnderline: true, classes: {input: classes.fontSize22}
+                                                disableUnderline: true, classes: { input: classes.fontSize22 }
                                             }}
                                             style={{
                                                 paddingRight: "30px"
@@ -386,14 +386,14 @@ export default (props) => {
                                         />
                                     </TableCell>
                                     <TableCell className={classes.tablePost}
-                                               width={"200px"}
+                                        width={"200px"}
                                     >
                                         <Table>
                                             <TableBody>
                                                 <TableRow>
                                                     <TableCell className={classes.tableCellNotBorder}
-                                                               width={60}
-                                                               align="right"
+                                                        width={60}
+                                                        align="right"
                                                     >
                                                         <Avatar
                                                             src={post.icon ? process.env.REACT_APP_API_URL + post.icon : ""}
@@ -408,12 +408,12 @@ export default (props) => {
                                                         >{post.nickname ? post.nickname.slice(0, 1) : ""}</Avatar>
                                                     </TableCell>
                                                     <TableCell className={classes.tableCellNotBorder}
-                                                               width={200}
+                                                        width={200}
                                                     >
-                                                        <h3 style={{marginBottom: "5px"}}>{post.nickname}</h3>
+                                                        <h3 style={{ marginBottom: "5px" }}>{post.nickname}</h3>
                                                         {post.is_creator ?
                                                             <img width={"20px"} height={"20px"}
-                                                                 src={flIcon}/> : ""
+                                                                src={flIcon} /> : ""
                                                         }
                                                     </TableCell>
                                                 </TableRow>
@@ -421,11 +421,11 @@ export default (props) => {
                                         </Table>
                                     </TableCell>
                                     <TableCell className={classes.tablePost}
-                                               width={"160px"}
-                                               align={"right"}
+                                        width={"160px"}
+                                        align={"right"}
                                     >
                                         <h4
-                                            style={{marginRight: "20px", width: "150px"}}
+                                            style={{ marginRight: "20px", width: "150px" }}
                                         >{post.create_at}</h4>
                                     </TableCell>
                                 </TableRow>
@@ -433,16 +433,16 @@ export default (props) => {
                         </Table>
 
                         {/* 누계 수 */}
-                        <Table style={{marginTop: "10px"}}>
+                        <Table style={{ marginTop: "10px" }}>
                             <TableHead>
                                 <TableRow>
                                     <TableCell className={classes.tablePostViewHead}>
                                         <Grid container spacing={1} alignItems="flex-end">
                                             <Grid item
-                                                  style={{height: "32px"}}>
+                                                style={{ height: "32px" }}>
                                                 <img src={iconEye}
-                                                     width={25}
-                                                     height={24}
+                                                    width={25}
+                                                    height={24}
                                                 />
                                             </Grid>
                                             <Grid item>
@@ -453,10 +453,10 @@ export default (props) => {
                                     <TableCell className={classes.tablePostViewHead}>
                                         <Grid container spacing={1} alignItems="flex-end">
                                             <Grid item
-                                                  style={{height: "32px"}}>
+                                                style={{ height: "32px" }}>
                                                 <img src={iconStar}
-                                                     width={25}
-                                                     height={24}
+                                                    width={25}
+                                                    height={24}
                                                 />
                                             </Grid>
                                             <Grid item>
@@ -467,10 +467,10 @@ export default (props) => {
                                     <TableCell className={classes.tablePostViewHead}>
                                         <Grid container spacing={1} alignItems="flex-end">
                                             <Grid item
-                                                  style={{height: "32px"}}>
+                                                style={{ height: "32px" }}>
                                                 <img src={iconLike}
-                                                     width={25}
-                                                     height={24}
+                                                    width={25}
+                                                    height={24}
                                                 />
                                             </Grid>
                                             <Grid item>
@@ -481,10 +481,10 @@ export default (props) => {
                                     <TableCell className={classes.tablePostViewHead}>
                                         <Grid container spacing={1} alignItems="flex-end">
                                             <Grid item
-                                                  style={{height: "32px"}}>
+                                                style={{ height: "32px" }}>
                                                 <img src={iconReply}
-                                                     width={25}
-                                                     height={24}
+                                                    width={25}
+                                                    height={24}
                                                 />
                                             </Grid>
                                             <Grid item>
@@ -495,10 +495,10 @@ export default (props) => {
                                     <TableCell className={classes.tablePostViewHead}>
                                         <Grid container spacing={1} alignItems="flex-end">
                                             <Grid item
-                                                  style={{height: "32px"}}>
+                                                style={{ height: "32px" }}>
                                                 <img src={iconDips}
-                                                     width={25}
-                                                     height={24}
+                                                    width={25}
+                                                    height={24}
                                                 />
                                             </Grid>
                                             <Grid item>
@@ -509,10 +509,10 @@ export default (props) => {
                                     <TableCell className={classes.tablePostViewHead}>
                                         <Grid container spacing={1} alignItems="flex-end">
                                             <Grid item
-                                                  style={{height: "32px"}}>
+                                                style={{ height: "32px" }}>
                                                 <img src={iconSpon}
-                                                     width={25}
-                                                     height={24}
+                                                    width={25}
+                                                    height={24}
                                                 />
                                             </Grid>
                                             <Grid item>
@@ -523,10 +523,10 @@ export default (props) => {
                                     <TableCell className={classes.tablePostViewHead}>
                                         <Grid container spacing={1} alignItems="flex-end">
                                             <Grid item
-                                                  style={{height: "32px"}}>
+                                                style={{ height: "32px" }}>
                                                 <img src={iconPoint}
-                                                     width={25}
-                                                     height={24}
+                                                    width={25}
+                                                    height={24}
                                                 />
                                             </Grid>
                                             <Grid item>
@@ -580,14 +580,14 @@ export default (props) => {
                         </Table>
 
                         {/* 내용, 해시 태그 */} {/* 크리에이터 정보 */}
-                        <Table style={{marginTop: "10px"}}>
+                        <Table style={{ marginTop: "10px" }}>
                             <TableBody>
                                 <TableRow>
                                     <TableCell>
                                         <TextField
                                             label="내용"
                                             name="content"
-                                            InputLabelProps={{shrink: true}}
+                                            InputLabelProps={{ shrink: true }}
                                             fullWidth
                                             value={post['content'] ? post['content'] : ''}
                                             multiline
@@ -609,7 +609,7 @@ export default (props) => {
                                         <TextField
                                             label="태그"
                                             name="tag"
-                                            InputLabelProps={{shrink: true}}
+                                            InputLabelProps={{ shrink: true }}
                                             fullWidth
                                             value={post['tags']}
                                             multiline
@@ -622,7 +622,7 @@ export default (props) => {
                                                 }
                                             }
                                             InputProps={{
-                                                classes: {input: classes.paddingLTTags},
+                                                classes: { input: classes.paddingLTTags },
                                                 disableUnderline: true
                                             }}
                                         />
@@ -633,7 +633,7 @@ export default (props) => {
                                         <TextField
                                             label="크리에이터 정보"
                                             name="info"
-                                            InputLabelProps={{shrink: true}}
+                                            InputLabelProps={{ shrink: true }}
                                             fullWidth
                                             value={post['my_info'] ? post['my_info'] : ''}
                                             multiline
@@ -647,7 +647,7 @@ export default (props) => {
                                             }
                                             InputProps={{
 
-                                                classes: {input: classes.paddingLTMultilineBlack},
+                                                classes: { input: classes.paddingLTMultilineBlack },
                                                 disableUnderline: true
                                             }}
                                         />
@@ -658,7 +658,7 @@ export default (props) => {
                                         <TextField
                                             label="동영상 저작권 동의 여부"
                                             name="copyright"
-                                            InputLabelProps={{shrink: true}}
+                                            InputLabelProps={{ shrink: true }}
                                             fullWidth
                                             value={post['copyright'] ? '동의' : ''}
                                             disabled={true}
@@ -670,10 +670,10 @@ export default (props) => {
                                             InputProps={{
                                                 startAdornment: (
                                                     <InputAdornment position="end">
-                                                        <CheckCircleIcon style={{ color: "#606060" }}/>
+                                                        <CheckCircleIcon style={{ color: "#606060" }} />
                                                     </InputAdornment>
                                                 ),
-                                                classes: {input: classes.paddingLTMultilineBlack},
+                                                classes: { input: classes.paddingLTMultilineBlack },
                                                 disableUnderline: true
                                             }}
                                         />
@@ -686,31 +686,31 @@ export default (props) => {
 
                     {/* 댓글 보기 */}
                     <Grid className={classes.tableWrap}
-                          style={{
-                              marginTop: "10px"
-                          }}
+                        style={{
+                            marginTop: "10px"
+                        }}
                     >
                         {/* 댓글 헤드*/}
                         <Table>
                             <TableBody>
                                 <TableRow height={"85px"}>
                                     <TableCell className={classes.tablePost}
-                                               style={{paddingLeft: "30px"}}
+                                        style={{ paddingLeft: "30px" }}
                                     >
                                         <Grid container spacing={1} alignItems="flex-end">
                                             <Grid item>
                                                 <img src={iconReplyWr}
-                                                     width={32}
-                                                     height={32}
+                                                    width={32}
+                                                    height={32}
                                                 />
                                             </Grid>
                                             <Grid item>
                                                 <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                                            style={{
-                                                                paddingTop: '2px',
-                                                                margin: 0,
-                                                                paddingBottom: "4px"
-                                                            }}>
+                                                    style={{
+                                                        paddingTop: '2px',
+                                                        margin: 0,
+                                                        paddingBottom: "4px"
+                                                    }}>
                                                     댓글 {numberWithCommas(reTotal)}
                                                 </Typography>
                                             </Grid>
@@ -722,7 +722,7 @@ export default (props) => {
 
                         {/* 댓글 */}
                         {reply ? reply.map((row, idx) => (
-                            <Table key={row.id} style={{marginTop: "10px"}}>
+                            <Table key={row.id} style={{ marginTop: "10px" }}>
                                 <TableBody>
                                     <TableRow key={row.id}>
                                         <TableCell width={72}>
@@ -742,13 +742,13 @@ export default (props) => {
                                             style={{
                                                 width: "10%"
                                             }}>
-                                            <p style={{fontWeight: "bold"}}>{row.nickname}</p>
+                                            <p style={{ fontWeight: "bold" }}>{row.nickname}</p>
                                             <p>{Moment(row.create_at).fromNow()}</p>
                                         </TableCell>
                                         <TableCell colSpan={2}>
                                             <TextField
                                                 name="content"
-                                                InputLabelProps={{shrink: true}}
+                                                InputLabelProps={{ shrink: true }}
                                                 fullWidth
                                                 value={row['content'] ? row['content'] : ''}
                                                 multiline
@@ -768,7 +768,7 @@ export default (props) => {
                                                 }}
                                             />
                                         </TableCell>
-                                        <TableCell style={{width: "20%"}}>
+                                        <TableCell style={{ width: "20%" }}>
                                             {!row.blind_chk ?
                                                 <Button
                                                     width={160}
@@ -781,7 +781,7 @@ export default (props) => {
                                                     }
                                                     onClick={() => {
                                                         setReId(row.id)
-                                                        setOpen({...open, 3: true})
+                                                        setOpen({ ...open, 3: true })
                                                     }}
                                                 >블라인드</Button> :
                                                 <Button
@@ -790,7 +790,7 @@ export default (props) => {
                                                     color="primary"
                                                     onClick={() => {
                                                         setReId(row.id)
-                                                        setOpen({...open, 4: true})
+                                                        setOpen({ ...open, 4: true })
                                                     }}
                                                 >블라인드 해제</Button>
                                             }
@@ -802,10 +802,10 @@ export default (props) => {
                                     {row.re ? row.re.map((re, idx) => (
                                         <TableRow key={re.id}>
                                             <TableCell>
-                                                <ReplyIcon/>
+                                                <ReplyIcon />
                                             </TableCell>
                                             <TableCell
-                                                style={{paddingLeft: "0px", width: "7%"}}
+                                                style={{ paddingLeft: "0px", width: "7%" }}
                                             >
                                                 <Avatar
                                                     src={post.icon ? process.env.REACT_APP_API_URL + re.icon : ""}
@@ -820,10 +820,10 @@ export default (props) => {
                                                 >{re.nickname ? re.nickname.slice(0, 1) : ""}</Avatar>
                                             </TableCell>
                                             <TableCell
-                                                style={{paddingLeft: "0px", width: "10%"}}
+                                                style={{ paddingLeft: "0px", width: "10%" }}
 
                                             >
-                                                <p style={{fontWeight: "bold"}}>{re.nickname}</p>
+                                                <p style={{ fontWeight: "bold" }}>{re.nickname}</p>
                                                 <p>{Moment(re.create_at).fromNow()}</p>
                                             </TableCell>
                                             <TableCell>
@@ -833,7 +833,7 @@ export default (props) => {
                                                 }}>{re["target_nickname"] ? re["target_nickname"] : "" + " "}</Link>
                                                 <TextField
                                                     name="content"
-                                                    InputLabelProps={{shrink: true}}
+                                                    InputLabelProps={{ shrink: true }}
                                                     fullWidth
                                                     value={re['content'] ? re['content'] : ''}
                                                     multiline
@@ -853,7 +853,7 @@ export default (props) => {
                                                     }}
                                                 />
                                             </TableCell>
-                                            <TableCell style={{width: "20%"}}
+                                            <TableCell style={{ width: "20%" }}
                                             >
                                                 {!re.blind_chk ?
                                                     <Button
@@ -866,9 +866,9 @@ export default (props) => {
                                                             }
                                                         }
                                                         onClick={() => {
-                                                            console.log(re.id)
+                                                            // console.log(re.id)
                                                             setReId(re.id)
-                                                            setOpen({...open, 3: true})
+                                                            setOpen({ ...open, 3: true })
                                                         }}
                                                     >블라인드</Button> :
                                                     <Button
@@ -876,9 +876,9 @@ export default (props) => {
                                                         variant="contained"
                                                         color="primary"
                                                         onClick={() => {
-                                                            console.log(re.id)
+                                                            // console.log(re.id)
                                                             setReId(re.id)
-                                                            setOpen({...open, 4: true})
+                                                            setOpen({ ...open, 4: true })
                                                         }}
                                                     >블라인드 해제</Button>
                                                 }
@@ -889,12 +889,12 @@ export default (props) => {
                             </Table>
                         )) : ""}
                         {reLv0Total > limit ?
-                            <Grid className={classes.tableWrap} style={{margin: "0px"}}>
+                            <Grid className={classes.tableWrap} style={{ margin: "0px" }}>
                                 <Button onClick={() => {
                                     setOffset(1)
                                     setLimit(limit + 10)
                                 }}
-                                        fullWidth={true}> + 더 보기
+                                    fullWidth={true}> + 더 보기
                                 </Button>
                             </Grid>
                             : ""

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from "prop-types";
 
 
@@ -20,12 +20,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from "@material-ui/core/Button";
 import ClearIcon from "@material-ui/icons/Clear";
-import {httpRequest} from "../../utils/httpReq";
-import {Pagination} from "@material-ui/lab";
+import { httpRequest } from "../../utils/httpReq";
+import { Pagination } from "@material-ui/lab";
 import Checkbox from "@material-ui/core/Checkbox";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 
 import Toolbar from "@material-ui/core/Toolbar";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -73,7 +73,7 @@ export default (props) => {
     const [validate, setValidate] = React.useState([]);
     const [dense, setDense] = React.useState(false);
 
-    const [open, setOpen] = React.useState({0: false, 1: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false })
     const [text, setText] = React.useState('')
 
     const [type, setType] = React.useState(status_chk('type') ? parseInt(window.sessionStorage.getItem('type')) : -1);
@@ -92,14 +92,14 @@ export default (props) => {
 
     const setSession = (_page, _type) => {
 
-        console.log(page, search);
+        // console.log(page, search);
 
         window.sessionStorage.setItem("page", _page ? _page : page)
         window.sessionStorage.setItem("search", search)
         window.sessionStorage.setItem("type", _type || _type === 0 ? _type : type)
         window.sessionStorage.setItem("path", window.location.pathname)
 
-        console.log(window.sessionStorage)
+        // console.log(window.sessionStorage)
     }
 
     const removeSession = async () => {
@@ -118,7 +118,7 @@ export default (props) => {
     const dataReq = () => {
         return new Promise(async (r, e) => {
 
-            console.log(window.sessionStorage);
+            // console.log(window.sessionStorage);
 
             if (window.sessionStorage.path !== window.location.pathname) {
                 await removeSession()
@@ -138,7 +138,7 @@ export default (props) => {
             }
 
             const res = await httpRequest('GET', url, headers, null)
-            console.log(res);
+            // console.log(res);
 
             if (!res['success']) {
                 if (res['code'] !== 1001) {
@@ -157,7 +157,7 @@ export default (props) => {
 
             let page_count = res['total'] / limit
 
-            console.log(page_count);
+            // console.log(page_count);
 
             if (res['total'] % limit !== 0) {
                 page_count += 1
@@ -173,7 +173,7 @@ export default (props) => {
 
         if (e.target.checked) {
 
-            console.log(state)
+            // console.log(state)
             const newSelecteds = state.map((n) => n.user_id);
             const newValidate = state.map((n) => n.copyright);
 
@@ -190,7 +190,7 @@ export default (props) => {
 
         const selectedIndex = selected.indexOf(name);
 
-        console.log(name, selectedIndex, selected, validate)
+        // console.log(name, selectedIndex, selected, validate)
 
         let newSelected = [];
         let newValidate = [];
@@ -227,9 +227,9 @@ export default (props) => {
 
     const openAlert = (text) => {
         setText(text)
-        setOpen({0: false, 1: false})
+        setOpen({ 0: false, 1: false })
         setTimeout(function () {
-            setOpen({0: false, 1: false})
+            setOpen({ 0: false, 1: false })
         }, 700);
     }
 
@@ -246,7 +246,7 @@ export default (props) => {
         return new Promise(async (result, err) => {
 
             // console.log(selected)
-            setOpen({0: false, 1: false})
+            setOpen({ 0: false, 1: false })
 
             let url = _type > 0 ? "/api/v1/admin/user/manage/creator/apply/approve" : "/api/v1/admin/user/manage/creator/apply/reject"
             const headers = {
@@ -263,7 +263,7 @@ export default (props) => {
                 }
 
                 res = await httpRequest('POST', url, headers, JSON.stringify(data))
-                console.log(res)
+                // console.log(res)
 
                 if (res['code'] > 1000) {
                     alert('실패')
@@ -280,16 +280,16 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"승인 하시겠습니까?"}
-                         fn={() => chkAuth(selected, 1)}/>
-            <DialogAlert open={open[1]} handleClose={() => setOpen({...open, 1: false})} text={"승인 거부 하시겠습니까?"}
-                         fn={() => chkAuth(selected, 0)}/>
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"승인 하시겠습니까?"}
+                fn={() => chkAuth(selected, 1)} />
+            <DialogAlert open={open[1]} handleClose={() => setOpen({ ...open, 1: false })} text={"승인 거부 하시겠습니까?"}
+                fn={() => chkAuth(selected, 0)} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={8}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => console.log('a')}>
-                            크리에이터 목록 <span style={{color: "#A6A6A6", fontSize: "18px"}}> (총 {listTotal}개)</span>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => { }}>
+                            크리에이터 목록 <span style={{ color: "#A6A6A6", fontSize: "18px" }}> (총 {listTotal}개)</span>
                         </Typography>
                     </Grid>
 
@@ -305,16 +305,16 @@ export default (props) => {
                             }
                             onClick={(e) => {
 
-                                console.log(selected, validate);
+                                // console.log(selected, validate);
                                 for (let val of validate) {
-                                    if (!val)  {
+                                    if (!val) {
                                         alert("저작권에 동의 하지 않은 신청은 승인이 불가능 합니다.\n확인 후 다시 선택해주세요.")
                                         return
                                     }
                                 }
 
                                 if (selected.length > 0) {
-                                    setOpen({...open, 0: true})
+                                    setOpen({ ...open, 0: true })
                                 }
                             }}
                         >승인</Button>
@@ -326,7 +326,7 @@ export default (props) => {
                             color="primary"
                             onClick={() => {
                                 if (selected.length > 0) {
-                                    setOpen({...open, 1: true})
+                                    setOpen({ ...open, 1: true })
                                 }
                             }}
                         >승인 거부</Button>
@@ -364,11 +364,11 @@ export default (props) => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <Search/>
+                                        <Search />
                                     </InputAdornment>
                                 ), endAdornment: (
                                     <IconButton position="end" onClick={() => setSearch('')}>
-                                        <ClearIcon/>
+                                        <ClearIcon />
                                     </IconButton>
                                 ),
                             }}
@@ -387,7 +387,7 @@ export default (props) => {
                                             indeterminate={selected.length > 0 && selected.length < state.length}
                                             checked={state.length > 0 && selected.length === state.length}
                                             onChange={handleSelectAllClick}
-                                            inputProps={{"aria-label": "select all post"}}
+                                            inputProps={{ "aria-label": "select all post" }}
                                             color="primary"
                                         />
                                     </TableCell>
@@ -405,31 +405,31 @@ export default (props) => {
                                     <TableRow key={row.id} hover>
                                         <TableCell padding="checkbox">
                                             <YellowCheckbox
-                                                inputProps={{"aria-labelledby": `enhanced-table-checkbox-${index}`}}
+                                                inputProps={{ "aria-labelledby": `enhanced-table-checkbox-${index}` }}
                                                 onClick={(e) => handleClick(e, row.user_id, row.copyright)}
                                                 checked={isSelected(row.user_id)}
                                             />
                                         </TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   onClick={() => moreBtnHandler(row)}>{row.create_at}
+                                            onClick={() => moreBtnHandler(row)}>{row.create_at}
                                             {row.status > 0 ?
-                                                <h4 style={{color: "#FFAE64"}}>승인 완료</h4> :
-                                                <h4 style={{color: "#041E62"}}>승인 대기</h4>
+                                                <h4 style={{ color: "#FFAE64" }}>승인 완료</h4> :
+                                                <h4 style={{ color: "#041E62" }}>승인 대기</h4>
                                             }
                                         </TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   onClick={() => moreBtnHandler(row)}>
-                                                    {row.copyright ?
-                                                        <CheckCircleIcon style={{color: "#606060"}}/>
-                                                        : <UncheckedIcon style={{color: "#606060"}}/> 
-                                                    }
+                                            onClick={() => moreBtnHandler(row)}>
+                                            {row.copyright ?
+                                                <CheckCircleIcon style={{ color: "#606060" }} />
+                                                : <UncheckedIcon style={{ color: "#606060" }} />
+                                            }
                                         </TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   onClick={() => moreBtnHandler(row)}>{row.nickname}</TableCell>
+                                            onClick={() => moreBtnHandler(row)}>{row.nickname}</TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   onClick={() => moreBtnHandler(row)}>{row.name}</TableCell>
+                                            onClick={() => moreBtnHandler(row)}>{row.name}</TableCell>
                                         <TableCell className={classes.tableCell} align="center"
-                                                   onClick={() => moreBtnHandler(row)}>
+                                            onClick={() => moreBtnHandler(row)}>
                                             {/*<Grid container spacing={3}>
                                                 {row.images ? row.images.map((img, idx) => (
 
@@ -446,27 +446,27 @@ export default (props) => {
                                                         <TableRow>
 
                                                             <TableCell width={"33.3%"}
-                                                                       className={classes.tableCellNotBorder}
-                                                                       align="left">
+                                                                className={classes.tableCellNotBorder}
+                                                                align="left">
                                                                 {row.images[0] ?
                                                                     <img width={"100%"} height={"130px"}
-                                                                         src={process.env.REACT_APP_API_URL + row.images[0]}/>
+                                                                        src={process.env.REACT_APP_API_URL + row.images[0]} />
                                                                     : ""}
                                                             </TableCell>
                                                             <TableCell width={"33.3%"}
-                                                                       className={classes.tableCellNotBorder}
-                                                                       align="left">
+                                                                className={classes.tableCellNotBorder}
+                                                                align="left">
                                                                 {row.images[1] ?
                                                                     <img width={"100%"} height={"130px"}
-                                                                         src={process.env.REACT_APP_API_URL + row.images[1]}/>
+                                                                        src={process.env.REACT_APP_API_URL + row.images[1]} />
                                                                     : ""}
                                                             </TableCell>
                                                             <TableCell width={"33.3%"}
-                                                                       className={classes.tableCellNotBorder}
-                                                                       align="left">
+                                                                className={classes.tableCellNotBorder}
+                                                                align="left">
                                                                 {row.images[2] ?
                                                                     <img width={"100%"} height={"130px"}
-                                                                         src={process.env.REACT_APP_API_URL + row.images[2]}/>
+                                                                        src={process.env.REACT_APP_API_URL + row.images[2]} />
                                                                     : ""}
                                                             </TableCell>
                                                         </TableRow>
@@ -481,17 +481,17 @@ export default (props) => {
                     </TableContainer>
                 </Grid>
             </Grid>
-            <Grid container direction="column-reverse" alignItems="flex-end" style={{paddingTop: '20px'}}>
+            <Grid container direction="column-reverse" alignItems="flex-end" style={{ paddingTop: '20px' }}>
                 <Grid item xs={12}>
                     <Pagination count={total} page={page} size="large" variant="outlined" shape="rounded"
-                                color="primary"
-                                onChange={(e, v) => {
+                        color="primary"
+                        onChange={(e, v) => {
 
-                                    console.log("v", v)
-                                    setPage(v)
-                                    setSession(v)
-                                    // history.push(`/admin/service/notice/list?p=${v}&s=${search}`)
-                                }}/>
+                            // console.log("v", v)
+                            setPage(v)
+                            setSession(v)
+                            // history.push(`/admin/service/notice/list?p=${v}&s=${search}`)
+                        }} />
                 </Grid>
             </Grid>
         </>

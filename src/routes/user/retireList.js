@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from "prop-types";
 
 import Link from '@material-ui/core/Link';
@@ -20,12 +20,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from "@material-ui/core/Button";
 import ClearIcon from "@material-ui/icons/Clear";
-import {httpRequest} from "../../utils/httpReq";
-import {Pagination} from "@material-ui/lab";
+import { httpRequest } from "../../utils/httpReq";
+import { Pagination } from "@material-ui/lab";
 import Checkbox from "@material-ui/core/Checkbox";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 
 import Toolbar from "@material-ui/core/Toolbar";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -72,7 +72,7 @@ export default (props) => {
     const [selected, setSelected] = React.useState([]);
     const [dense, setDense] = React.useState(false);
 
-    const [open, setOpen] = React.useState({0: false, 1: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false })
     const [text, setText] = React.useState('')
 
     const [type, setType] = React.useState(status_chk('type') ? parseInt(window.sessionStorage.getItem('type')) : -1);
@@ -196,7 +196,7 @@ export default (props) => {
 
             for (let item of data) {
 
-                console.log(item.category);
+                // console.log(item.category);
                 if (item.category <= 4) {
                     arr1[item.category - 1].cnt = item.cnt;
                 } else {
@@ -213,7 +213,7 @@ export default (props) => {
     const dataReq = () => {
         return new Promise(async (r, e) => {
 
-            console.log(window.sessionStorage);
+            // console.log(window.sessionStorage);
 
             if (window.sessionStorage.path !== window.location.pathname) {
                 await removeSession()
@@ -233,7 +233,7 @@ export default (props) => {
             }
 
             const res = await httpRequest('GET', url, headers, null)
-            console.log(res);
+            // console.log(res);
 
             if (!res['success']) {
                 if (res['code'] !== 1001) {
@@ -259,7 +259,7 @@ export default (props) => {
 
             let page_count = res['total'] / limit
 
-            console.log(page_count);
+            // console.log(page_count);
 
             if (res['total'] % limit !== 0) {
                 page_count += 1
@@ -275,21 +275,21 @@ export default (props) => {
 
         switch (category) {
 
-            case 1 :
+            case 1:
                 return "잠깐 떠났다가 다시 돌아올게요."
-            case 2 :
+            case 2:
                 return "개인정보에 대한 우려가 있어요."
-            case 3 :
+            case 3:
                 return "콘텐츠의 온라인 유통에 대한 우려가 있어요"
-            case 4 :
+            case 4:
                 return "콘텐츠가 다양하지 않아요."
-            case 5 :
+            case 5:
                 return "콘텐츠의 질이 떨어져요"
-            case 6 :
+            case 6:
                 return "앱이나 서비스 이용이 불편해요."
-            case 7 :
+            case 7:
                 return "광고메시지가 너무 많아요."
-            case 8 :
+            case 8:
                 return "회원 혜택이 부족해요."
             default:
                 return '';
@@ -301,7 +301,7 @@ export default (props) => {
 
         if (e.target.checked) {
 
-            console.log(state)
+            // console.log(state)
             const newSelecteds = state.map((n) => n.id);
             setSelected(newSelecteds);
             return;
@@ -314,7 +314,7 @@ export default (props) => {
 
         const selectedIndex = selected.indexOf(name);
 
-        console.log(name, selectedIndex, selected)
+        // console.log(name, selectedIndex, selected)
 
         let newSelected = [];
 
@@ -331,7 +331,7 @@ export default (props) => {
             );
         }
 
-        console.log(newSelected)
+        // console.log(newSelected)
 
         setSelected(newSelected);
     };
@@ -343,9 +343,9 @@ export default (props) => {
 
     const openAlert = (text) => {
         setText(text)
-        setOpen({0: false, 1: false})
+        setOpen({ 0: false, 1: false })
         setTimeout(function () {
-            setOpen({0: false, 1: false})
+            setOpen({ 0: false, 1: false })
         }, 700);
     }
 
@@ -365,14 +365,14 @@ export default (props) => {
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={8}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => console.log('a')}>
-                            탈퇴 사유 확인 <span style={{color: "#A6A6A6", fontSize: "18px"}}>(총 {retireTotal}개)</span>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => { }}>
+                            탈퇴 사유 확인 <span style={{ color: "#A6A6A6", fontSize: "18px" }}>(총 {retireTotal}개)</span>
                         </Typography>
 
                     </Grid>
                 </Grid>
             </Paper>
-            <Paper className={clsx(classes.paper, classes.marginTop30)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop30)} style={{ width: '100%' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Table className={classes.table}>
@@ -380,20 +380,20 @@ export default (props) => {
                                 {reasonList1[0] ? reasonList1.map((row, index) => (
                                     <TableRow key={index}>
                                         <TableCell className={classes.tableCellNotBorderPadding0} align={"left"}
-                                                   width={"70%"}
+                                            width={"70%"}
                                         >
-                                            <h4><span style={{color: "#FFAE64"}}>● </span>
+                                            <h4><span style={{ color: "#FFAE64" }}>● </span>
                                                 <Link style={{
                                                     cursor: "pointer"
                                                 }}
-                                                      onClick={() => {
-                                                          setCategory(row.category)
-                                                      }}
+                                                    onClick={() => {
+                                                        setCategory(row.category)
+                                                    }}
                                                 >{row.reason}</Link>
                                             </h4>
                                         </TableCell>
                                         <TableCell className={classes.tableCellNotBorderPadding0} align={"left"}>
-                                            <h4 style={{color: "#FFAE64"}}>{row.cnt} 건</h4>
+                                            <h4 style={{ color: "#FFAE64" }}>{row.cnt} 건</h4>
                                         </TableCell>
                                     </TableRow>
                                 )) : <TableRow></TableRow>}
@@ -407,20 +407,20 @@ export default (props) => {
                                 {reasonList2[0] ? reasonList2.map((row, index) => (
                                     <TableRow key={index}>
                                         <TableCell className={classes.tableCellNotBorderPadding0} align={"left"}
-                                                   width={"70%"}
+                                            width={"70%"}
                                         >
-                                            <h4><span style={{color: "#FFAE64"}}>● </span>
+                                            <h4><span style={{ color: "#FFAE64" }}>● </span>
                                                 <Link style={{
                                                     cursor: "pointer"
                                                 }}
-                                                      onClick={() => {
-                                                          setCategory(row.category)
-                                                      }}
+                                                    onClick={() => {
+                                                        setCategory(row.category)
+                                                    }}
                                                 >{row.reason}</Link>
                                             </h4>
                                         </TableCell>
                                         <TableCell className={classes.tableCellNotBorderPadding0} align={"left"}>
-                                            <h4 style={{color: "#FFAE64"}}>{row.cnt} 건</h4>
+                                            <h4 style={{ color: "#FFAE64" }}>{row.cnt} 건</h4>
                                         </TableCell>
                                     </TableRow>
                                 )) : <TableRow></TableRow>}
@@ -461,12 +461,12 @@ export default (props) => {
                                         <TableCell className={classes.tableCell} align="center"
                                         >{row.reason}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
+                                            align="center"
                                         >
                                             <TextField
                                                 InputProps={{
                                                     readOnly: true,
-                                                    disableUnderline: true, classes: {input: classes.fontSize13}
+                                                    disableUnderline: true, classes: { input: classes.fontSize13 }
                                                 }}
                                                 multiline
                                                 rows={2}
@@ -481,17 +481,17 @@ export default (props) => {
                     </TableContainer>
                 </Grid>
             </Grid>
-            <Grid container direction="column-reverse" alignItems="flex-end" style={{paddingTop: '20px'}}>
+            <Grid container direction="column-reverse" alignItems="flex-end" style={{ paddingTop: '20px' }}>
                 <Grid item xs={12}>
                     <Pagination count={total} page={page} size="large" variant="outlined" shape="rounded"
-                                color="primary"
-                                onChange={(e, v) => {
+                        color="primary"
+                        onChange={(e, v) => {
 
-                                    console.log("v", v)
-                                    setPage(v)
-                                    setSession(v)
-                                    // history.push(`/admin/service/notice/list?p=${v}&s=${search}`)
-                                }}/>
+                            // console.log("v", v)
+                            setPage(v)
+                            setSession(v)
+                            // history.push(`/admin/service/notice/list?p=${v}&s=${search}`)
+                        }} />
                 </Grid>
             </Grid>
         </>

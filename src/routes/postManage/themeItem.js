@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Paper from '@material-ui/core/Paper';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import {httpRequest} from "../../utils/httpReq";
-import DialogAlert, {AlertText} from "../../utils/dialogAlert";
+import { httpRequest } from "../../utils/httpReq";
+import DialogAlert, { AlertText } from "../../utils/dialogAlert";
 import func from "../../utils/functions";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -14,11 +14,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
-import {withStyles} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 import Modal from "@material-ui/core/Modal";
 import SearchVideo from "./search"
-import {Player} from "video-react";
+import { Player } from "video-react";
 import UploadService from "../../utils/upload-files.service";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -52,7 +52,7 @@ function getModalStyle() {
 
 
 export default (props) => {
-    const {classes, history, match} = props
+    const { classes, history, match } = props
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     const [modalStyle] = React.useState(getModalStyle);
@@ -69,7 +69,7 @@ export default (props) => {
 
     const [preview, setPreview] = React.useState("")
 
-    const [open, setOpen] = React.useState({0: false, 1: false, 2: false})
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
     const [text, setText] = React.useState('')
 
 
@@ -80,9 +80,9 @@ export default (props) => {
     const openAlert = (text) => {
 
         setText(text)
-        setOpen({0: false, 1: false, 2: true})
+        setOpen({ 0: false, 1: false, 2: true })
         setTimeout(function () {
-            setOpen({0: false, 1: false, 2: false})
+            setOpen({ 0: false, 1: false, 2: false })
         }, 700);
     }
 
@@ -106,7 +106,7 @@ export default (props) => {
                 return
             }
 
-            let url = `/api/v1/admin/post/com/pick/${match.params.id}`
+            let url = `/api/v1/admin/post/owner/pick/${match.params.id}`
             const headers = {
                 'token': window.localStorage.getItem('token')
             }
@@ -144,7 +144,7 @@ export default (props) => {
 
 
     const save = () => {
-        setOpen({0: false, 1: false, 2: false})
+        setOpen({ 0: false, 1: false, 2: false })
         return new Promise(async (r, e) => {
 
             let insVideo = [];
@@ -160,7 +160,7 @@ export default (props) => {
                 alert("영상을 등록하세요.")
                 return
             }
-            else if (videos.length > 5 ) {
+            else if (videos.length > 5) {
                 alert("영상은 5개만 등록 가능합니다.")
                 return
             }
@@ -209,7 +209,7 @@ export default (props) => {
 
             // console.log(data);
 
-            let url = '/api/v1/admin/post/com/pick/register'
+            let url = '/api/v1/admin/post/owner/pick/register'
 
             const headers = {
                 'token': window.localStorage.getItem('token'),
@@ -251,11 +251,11 @@ export default (props) => {
 
     const changeValue = (e) => {
 
-        let val = {...videos}
+        let val = { ...videos }
 
         val[e.target.name] = e.target.value
 
-        console.log(val);
+        // console.log(val);
 
         // setState(val)
     }
@@ -272,7 +272,7 @@ export default (props) => {
 
         let img = ["jpg", "jpeg", "png"]
 
-        console.log(files[0].type.replaceAll("image/", ""))
+        // console.log(files[0].type.replaceAll("image/", ""))
 
         if (!img.includes(files[0].type.replaceAll("image/", ""))) {
             alert("png, jpg, jpeg 파일만 업로드 가능합니다.")
@@ -341,16 +341,16 @@ export default (props) => {
 
     const handleClick = (event, id, parent) => {
 
-        console.log(parent);
+        // console.log(parent);
 
         const selectedIndex = selected.findIndex(obj => obj.id === id);
 
-        console.log(id, selectedIndex, selected)
+        // console.log(id, selectedIndex, selected)
 
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, {id: id, parent_id: parent});
+            newSelected = newSelected.concat(selected, { id: id, parent_id: parent });
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -404,16 +404,16 @@ export default (props) => {
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({...open, 0: false})} text={"저장 하시겠습니까?"}
-                         fn={() => save()}/>
-            <AlertText open={open[2]} handleClose={() => setOpen({...open, 2: false})} text={text} classes={classes}/>
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"저장 하시겠습니까?"}
+                fn={() => save()} />
+            <AlertText open={open[2]} handleClose={() => setOpen({ ...open, 2: false })} text={text} classes={classes} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
                         <Typography component="h2" variant="h5" color="initial" gutterBottom
-                                    style={{paddingTop: '5px', margin: 0}} onClick={() => {
-                            console.log(videos)
-                        }}>
+                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => {
+                                // console.log(videos)
+                            }}>
                             영상 테마 추가
                         </Typography>
                     </Grid>
@@ -434,13 +434,13 @@ export default (props) => {
                                 }
                             }
                             onClick={() => {
-                                setOpen({...open, 0: true})
+                                setOpen({ ...open, 0: true })
                             }}
                         >저장</Button>
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Button
-                            style={{fontWeight: 'bold', color: '#041E62', backgroundColor:'#E0E7F7'}}
+                            style={{ fontWeight: 'bold', color: '#041E62', backgroundColor: '#E0E7F7' }}
                             type="submit"
                             fullWidth
                             variant="contained"
@@ -453,23 +453,23 @@ export default (props) => {
             </Paper>
             <TextField
                 className={classes.marginTop30}
-                style={{marginLeft: '10px', marginTop: "50px"}}
+                style={{ marginLeft: '10px', marginTop: "50px" }}
                 InputProps={{
                     readOnly: true,
-                    disableUnderline: true, classes: {input: classes.fontSize22}
+                    disableUnderline: true, classes: { input: classes.fontSize22 }
                 }}
                 value="영상 테마"
             />
 
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid container
-                      style={{padding: "30px"}}
+                    style={{ padding: "30px" }}
                 >
                     <Grid item xs={12}>
                         <TextField
                             label="영상 테마 제목"
                             name="title"
-                            InputLabelProps={{shrink: true}}
+                            InputLabelProps={{ shrink: true }}
                             inputProps={{
                                 maxlength: 100
                             }}
@@ -478,7 +478,7 @@ export default (props) => {
                             multiline={true}
                             value={title ? title : ''}
                             InputProps={{
-                                classes: {input: classes.paddingLT}
+                                classes: { input: classes.paddingLT }
                             }}
                             onChange={(e) => {
 
@@ -498,20 +498,20 @@ export default (props) => {
                         }}
                         InputProps={{
                             readOnly: true,
-                            disableUnderline: true, classes: {input: classes.labelFont},
+                            disableUnderline: true, classes: { input: classes.labelFont },
 
                         }}
                         value="썸네일"
                     />
 
                     <Grid container className={clsx(classes.paper, classes.marginTop10)}
-                          style={{paddingLeft: 0}}
+                        style={{ paddingLeft: 0 }}
                     >
                         <Grid item xs={8}>
                             {preview.file ?
                                 <Grid>
                                     <img className='profile_preview' src={preview.previewURL}
-                                         width={200}
+                                        width={200}
                                     />
                                     <IconButton
                                         onClick={(e) => {
@@ -520,7 +520,7 @@ export default (props) => {
                                             })
                                         }}
                                     >
-                                        <CloseIcon/>
+                                        <CloseIcon />
                                     </IconButton>
                                 </Grid>
                                 :
@@ -528,7 +528,7 @@ export default (props) => {
                                     <input
                                         id="btn-upload"
                                         name="btn-upload"
-                                        style={{display: 'none'}}
+                                        style={{ display: 'none' }}
                                         type="file"
                                         onChange={setImage}
                                     />
@@ -536,7 +536,7 @@ export default (props) => {
                                         className="btn-choose"
                                         variant="contained"
                                         color="primary"
-                                        style={{marginRight: '10px'}}
+                                        style={{ marginRight: '10px' }}
                                         component="span">
                                         이미지 업로드
                                     </Button>
@@ -552,14 +552,14 @@ export default (props) => {
 
 
             <Grid container spacing={3}
-                  style={{marginTop: '40px'}}
+                style={{ marginTop: '40px' }}
             >
                 <Grid item xs={12} sm={8}>
                     <TextField
-                        style={{marginLeft: '10px'}}
+                        style={{ marginLeft: '10px' }}
                         InputProps={{
                             readOnly: true,
-                            disableUnderline: true, classes: {input: classes.fontSize22}
+                            disableUnderline: true, classes: { input: classes.fontSize22 }
                         }}
                         value="플레이 리스트 설정"
                     />
@@ -591,7 +591,7 @@ export default (props) => {
                             modalHandler={setModalOpen}
                             initialSelect={setSelected}
                             classes={classes}
-                            style={modalStyle}/>
+                            style={modalStyle} />
                     </Modal>
                 </Grid>
                 <Grid item xs={12} sm={2}>
@@ -608,7 +608,7 @@ export default (props) => {
             </Grid>
 
             {/* 영상 리스트 */}
-            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{width: '100%'}}>
+            <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                 <Grid>
                     <TableContainer>
                         <Table className={classes.table}>
@@ -620,13 +620,13 @@ export default (props) => {
                                             indeterminate={selected.length > 0 && selected.length < videos.length}
                                             checked={videos.length > 0 && selected.length === videos.length}
                                             onChange={handleSelectAllClick}
-                                            inputProps={{"aria-label": "select all post"}}
+                                            inputProps={{ "aria-label": "select all post" }}
                                             color="primary"
                                         />
                                     </TableCell>
                                     <TableCell className={classes.tableCell} align="center">작성자</TableCell>
                                     <TableCell className={classes.tableCell} align="center"
-                                               style={{paddingLeft: '40px'}}
+                                        style={{ paddingLeft: '40px' }}
                                     >제목</TableCell>
                                     <TableCell className={classes.tableCell} align="center">조회수</TableCell>
                                     <TableCell className={classes.tableCell} align="center">평점</TableCell>
@@ -638,14 +638,14 @@ export default (props) => {
                             <TableBody>
                                 {videos[0] ? videos.map((row, index) => (
                                     <TableRow key={row.id} id={"t" + row.id}
-                                              style={
-                                                  isSelected(row.id) ? {backgroundColor: "#E0E7F7"} : {backgroundColor: "white"}
-                                              }
-                                              hover>
+                                        style={
+                                            isSelected(row.id) ? { backgroundColor: "#E0E7F7" } : { backgroundColor: "white" }
+                                        }
+                                        hover>
                                         <TableCell padding="checkbox">
                                             <YellowCheckbox
                                                 id={"v" + row.id}
-                                                inputProps={{"aria-labelledby": `enhanced-table-checkbox-${index}`}}
+                                                inputProps={{ "aria-labelledby": `enhanced-table-checkbox-${index}` }}
                                                 onClick={(e) => {
                                                     e.preventDefault()
                                                     handleClick(e, row.id, row.parent_id)
@@ -658,19 +658,19 @@ export default (props) => {
                                         </TableCell>
 
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e, row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.nickname}</TableCell>
 
                                         <TableCell className={classes.tableCell}
-                                                   align="left"
-                                                   style={
-                                                       {
-                                                           paddingTop: '10px',
-                                                           paddingBottom: '10px'
-                                                       }}
+                                            align="left"
+                                            style={
+                                                {
+                                                    paddingTop: '10px',
+                                                    paddingBottom: '10px'
+                                                }}
                                         >
                                             <TableCell
                                                 style={
@@ -699,7 +699,7 @@ export default (props) => {
                                                         paddingTop: '0px',
                                                         paddingBottom: '0px',
                                                         borderBottom: "0px",
-                                                        width:"100%"
+                                                        width: "100%"
                                                     }}
                                                 onClick={(e) => {
                                                     clickChkBox(e, row)
@@ -707,7 +707,7 @@ export default (props) => {
                                             >
                                                 <TextField
                                                     // className={classes.marginTop30}
-                                                    style={{marginLeft: '10px'}}
+                                                    style={{ marginLeft: '10px' }}
                                                     fullWidth
                                                     multiline
                                                     InputProps={{
@@ -720,34 +720,34 @@ export default (props) => {
                                             </TableCell>
                                         </TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e, row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.view_cnt}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e, row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.score}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e, row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.like_cnt}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e, row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.reply_cnt}</TableCell>
                                         <TableCell className={classes.tableCell}
-                                                   align="center"
-                                                   onClick={(e) => {
-                                                       clickChkBox(e, row)
-                                                   }}
+                                            align="center"
+                                            onClick={(e) => {
+                                                clickChkBox(e, row)
+                                            }}
                                         >{row.dibs_cnt}</TableCell>
 
                                     </TableRow>
