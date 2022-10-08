@@ -106,7 +106,7 @@ export default (props) => {
                 return
             }
 
-            let url = `/api/v1/admin/post/com/pick/${match.params.id}`
+            let url = `/api/v1/admin/post/owner/pick/${match.params.id}`
             const headers = {
                 'token': window.localStorage.getItem('token')
             }
@@ -209,7 +209,7 @@ export default (props) => {
 
             // console.log(data);
 
-            let url = '/api/v1/admin/post/com/pick/register'
+            let url = '/api/v1/admin/post/owner/pick/register'
 
             const headers = {
                 'token': window.localStorage.getItem('token'),

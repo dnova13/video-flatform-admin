@@ -122,7 +122,7 @@ export default (props) => {
 
             let offset = (page - 1) * limit + 1;
 
-            let url = `/api/v1/admin/post/com/pick/list?limit=${limit}&offset=${offset}`
+            let url = `/api/v1/admin/post/owner/pick/list?limit=${limit}&offset=${offset}`
 
 
             const headers = {
@@ -214,7 +214,7 @@ export default (props) => {
 
             // console.log(selected)
 
-            let url = '/api/v1/admin/post/com/pick/delete'
+            let url = '/api/v1/admin/post/owner/pick/delete'
             const headers = {
                 'token': window.localStorage.getItem('token'),
                 'Content-type': 'application/json; charset=utf-8'

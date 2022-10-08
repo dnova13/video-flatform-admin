@@ -145,7 +145,7 @@ export default (props) => {
             let offset = (page - 1) * limit + 1;
 
             let url =
-                `/api/v1/admin/post/manage/list/noBlind?limit=${limit}&offset=${offset}&keyword=${search}`
+                `/api/v1/admin/post/manage/list/no-blind?limit=${limit}&offset=${offset}&keyword=${search}`
             const headers = {
                 'token': window.localStorage.getItem('token')
             }

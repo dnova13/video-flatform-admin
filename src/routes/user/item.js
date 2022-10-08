@@ -127,7 +127,7 @@ export default (props) => {
 
                 let urlArr = []
 
-                urlArr[0] = `/api/v1/admin/user/manage/member/detail/creatorApply?user_id=${match.params.id}`
+                urlArr[0] = `/api/v1/admin/user/manage/member/detail/creator-apply?user_id=${match.params.id}`
                 urlArr[1] = `/api/v1/admin/user/manage/member/detail/sponsored/point?user_id=${match.params.id}`
 
                 let limit = 3;

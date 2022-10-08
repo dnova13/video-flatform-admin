@@ -234,7 +234,7 @@ export default (props) => {
                 return;
             }
 
-            let url = menu === 1 ? "/api/v1/admin/tags/com/register" : "/api/v1/admin/tags/recommend/register"
+            let url = menu === 1 ? "/api/v1/admin/tags/owner/register" : "/api/v1/admin/tags/recommend/register"
             const headers = {
                 'token': window.localStorage.getItem('token'),
                 'Content-type': 'application/json; charset=utf-8'

@@ -106,7 +106,7 @@ export default (props) => {
                  return
              }*/
 
-            let url = '/api/v1/admin/post/com/curation'
+            let url = '/api/v1/admin/post/owner/curation'
             const headers = {
                 'token': window.localStorage.getItem('token')
             }
@@ -187,7 +187,7 @@ export default (props) => {
 
             //  console.log(data);
 
-            let url = '/api/v1/admin/post/com/curation/register'
+            let url = '/api/v1/admin/post/owner/curation/register'
 
             const headers = {
                 'token': window.localStorage.getItem('token'),

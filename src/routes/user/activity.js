@@ -206,7 +206,7 @@ export default (props) => {
                 url = `/api/v1/admin/statistics/day/in${a}/login?date=${date}`
             } else {
 
-                url = `/api/v1/admin/statistics/month/inYear/login?date=${year}-01-01`
+                url = `/api/v1/admin/statistics/month/in-year/login?date=${year}-01-01`
             }
 
             const headers = {
