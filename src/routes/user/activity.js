@@ -200,10 +200,10 @@ export default (props) => {
 
             if (period === "week") {
 
-                let a
-                week === "this" ? a = "Week" : a = "7days";
+                let _str
+                week === "this" ? _str = "-week" : _str = "7days";
 
-                url = `/api/v1/admin/statistics/day/in${a}/login?date=${date}`
+                url = `/api/v1/admin/statistics/day/in${_str}/login?date=${date}`
             } else {
 
                 url = `/api/v1/admin/statistics/month/in-year/login?date=${year}-01-01`

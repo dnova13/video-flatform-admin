@@ -46,23 +46,27 @@ export default (props) => {
     const dataReq = (q) => {
         return new Promise(async (r, e) => {
 
-            let url1 = '/api/v1/admin/statistics/daily/earnings'
-            let url2 = '/api/v1/admin/statistics/daily/join'
-            let url3 = '/api/v1/admin/statistics/daily/login'
 
             let now = Moment().format('YYYY-MM-DD')
-            // let now ;
-
-            // 그래프
-            let url4 = '/api/v1/admin/statistics/day/in7days/join?date=' + now
-            let url5 = '/api/v1/admin/statistics/day/in-week/login?date=' + now
 
             let limit6 = 4;
             let limit7 = 4;
 
-            // 내역
-            let url6 = `/api/v1/admin/points/manage/adjustment/apply/list?limit=${limit6}&offset=1`
-            let url7 = `/api/v1/admin/report/list/simple?limit=${limit7}&offset=1`
+            let urlObj = {
+                // 매출 및 조회수
+                "url1": '/api/v1/admin/statistics/daily/earnings',
+                "url2": '/api/v1/admin/statistics/daily/join',
+                "url3": '/api/v1/admin/statistics/daily/login',
+
+                // 그래프
+                "url4": `/api/v1/admin/statistics/day/in7days/join?date=${now}`,
+                "url5": `/api/v1/admin/statistics/day/in-week/login?date=${now}`,
+
+                // 내역
+                "url6": `/api/v1/admin/points/manage/adjustment/apply/list?limit=${limit6}&offset=1`,
+                "url7": `/api/v1/admin/report/list/simple?limit=${limit7}&offset=1`
+            }
+
 
             const headers = {
                 'token': window.localStorage.getItem('token')
@@ -80,13 +84,10 @@ export default (props) => {
                 null
             ];
 
-            resArr.push(await httpRequest('GET', url1, headers, null))
-            resArr.push(await httpRequest('GET', url2, headers, null))
-            resArr.push(await httpRequest('GET', url3, headers, null))
-            resArr.push(await httpRequest('GET', url4, headers, null))
-            resArr.push(await httpRequest('GET', url5, headers, null))
-            resArr.push(await httpRequest('GET', url6, headers, null))
-            resArr.push(await httpRequest('GET', url7, headers, null))
+            for (let url of Object.values(urlObj)) {
+                resArr.push(await httpRequest('GET', url, headers, null))
+            }
+
 
             let i = -1;
             for (let item of resArr) {

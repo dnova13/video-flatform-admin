@@ -207,11 +207,7 @@ export default (props) => {
             newSelected = newSelected.concat(selected, name);
         }
 
-        // console.log(newSelected);
-
         setSelected(newSelected);
-
-        // console.log(selected);
     };
 
 
