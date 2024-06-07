@@ -1,0 +1,17 @@
+version: '3'
+services:
+    frontend:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: video_admin
+        ports:
+            - '8080:5000'
+        # 최대 메모리양 설정 : 128m : 적은양 간단한 작업식 적절
+        mem_limit: 128m
+        networks:
+            - platform-network
+networks:
+    platform-network:
+        name: platform-network
+        driver: bridge
