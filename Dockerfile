@@ -11,7 +11,7 @@ RUN npm run build
 
 # nginx를 가동하고 윗 단계에서 생성된 빌드 파일들을 제공해주는 단계
 FROM nginx
-EXPOSE 5000 
+EXPOSE 3000
 
 ## default.conf 에서 해준 설정을 nginx 컨테이너 안에 있는 설정이 되게 복사
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf

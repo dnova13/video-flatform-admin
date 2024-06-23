@@ -5,8 +5,8 @@ services:
             context: .
             dockerfile: Dockerfile
         container_name: video_admin
-        ports:
-            - '8080:5000'
+        # ports:
+        #     - '3000:3000'
         # 최대 메모리양 설정 : 128m : 적은양 간단한 작업식 적절
         mem_limit: 128m
         networks:
