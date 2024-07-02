@@ -39,4 +39,8 @@ pw : 1q2w3e!
 ```
 docker compose up -d
 docker compose up -d --build
+
+
+# freetirer 용
+docker-compose -f docker-compose.freetier.yml up
 ```
