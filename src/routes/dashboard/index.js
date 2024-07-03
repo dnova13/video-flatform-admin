@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { CanvasJSChart } from 'canvasjs-react-charts';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -102,8 +102,6 @@ export default (props) => {
 
                 dataArr[i] = item.data;
             }
-
-            console.log(dataArr);
 
             setSales(func.numberWithCommas(dataArr[0].daily_earnings));
             setRegister(func.numberWithCommas(dataArr[1].daily_join));
@@ -334,6 +332,11 @@ export default (props) => {
                                                             }}
                                                         >
                                                             <Player
+                                                                ref={(player) => {
+                                                                    if (player?.volume) {
+                                                                        player.volume = 0.5;
+                                                                    }
+                                                                }}
                                                                 className="dashboard"
                                                                 poster={row.thumbnail ? process.env.REACT_APP_API_URL + row.thumbnail : ''}
                                                                 fluid={false}

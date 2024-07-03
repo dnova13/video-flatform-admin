@@ -1,90 +1,87 @@
 import clsx from 'clsx';
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 
 import Paper from '@material-ui/core/Paper';
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { httpRequest } from "../../utils/httpReq";
-import DialogAlert, { AlertText } from "../../utils/dialogAlert";
-import Link from "@material-ui/core/Link";
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { httpRequest } from '../../utils/httpReq';
+import DialogAlert, { AlertText } from '../../utils/dialogAlert';
+import Link from '@material-ui/core/Link';
 
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import TableBody from "@material-ui/core/TableBody";
-import TableContainer from "@material-ui/core/TableContainer";
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import TableBody from '@material-ui/core/TableBody';
+import TableContainer from '@material-ui/core/TableContainer';
 
 import { Player } from 'video-react';
-import func from "../../utils/functions";
+import func from '../../utils/functions';
 import HLSSource from '../../components/HLSSource';
 
 // import 'video-react/dist/video-react.css';
 
 export default (props) => {
-    const { classes, history, match } = props
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+    const { classes, history, match } = props;
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-    const [state, setState] = React.useState("");
+    const [state, setState] = React.useState('');
 
     useEffect(() => {
-        dataReq()
-    }, [])
+        dataReq();
+    }, []);
 
     const div = {
-        1: "남자",
-        2: "여자"
-    }
+        1: '남자',
+        2: '여자',
+    };
 
-    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false })
-    const [text, setText] = React.useState('')
+    const [open, setOpen] = React.useState({ 0: false, 1: false, 2: false });
+    const [text, setText] = React.useState('');
 
     const openAlert = (text) => {
-
-        setText(text)
-        setOpen({ 0: false, 1: false, 2: true })
+        setText(text);
+        setOpen({ 0: false, 1: false, 2: true });
         setTimeout(function () {
-            setOpen({ 0: false, 1: false, 2: false })
+            setOpen({ 0: false, 1: false, 2: false });
         }, 700);
-    }
+    };
 
     const removeToken = () => {
-        window.localStorage.removeItem('token')
-        window.localStorage.removeItem('isLogin')
-        window.location.replace('/admin')
-    }
+        window.localStorage.removeItem('token');
+        window.localStorage.removeItem('isLogin');
+        window.location.replace('/admin');
+    };
 
     const dataReq = (q) => {
         return new Promise(async (r, e) => {
-
             // console.log("match", match)
 
             if (!match.params.id) {
-                return
+                return;
             }
 
-            let url = '/api/v1/admin/report/read?id={0}&type={1}'.format(match.params.id, "reply")
+            let url = '/api/v1/admin/report/read?id={0}&type={1}'.format(match.params.id, 'reply');
             const headers = {
-                'token': window.localStorage.getItem('token')
-            }
+                token: window.localStorage.getItem('token'),
+            };
 
-            const res = await httpRequest('GET', url, headers, null)
+            const res = await httpRequest('GET', url, headers, null);
 
             // console.log(res);
 
             if (!res['success'] || res['code'] !== 1000) {
-
                 if (res['code'] !== 1001) {
                     // removeToken()
 
                     if (res['code'] === 1008) {
-                        func.removeToken()
+                        func.removeToken();
                     }
 
-                    alert('불러오기 실패')
-                    return
+                    alert('불러오기 실패');
+                    return;
                 }
                 /*if (res['code'] === 2002) {
                     removeToken()
@@ -92,114 +89,116 @@ export default (props) => {
             }
 
             let item = res['data'];
-            item.total_sponsor_points = numberWithCommas(item.total_sponsor_points)
+            item.total_sponsor_points = numberWithCommas(item.total_sponsor_points);
 
             switch (item.category) {
-
                 case 1:
-                    item.reason = "명예훼손/사생활 침해 및 저작권 침해 등";
+                    item.reason = '명예훼손/사생활 침해 및 저작권 침해 등';
                     break;
                 case 2:
-                    item.reason = "음란성 또는 청소년에게 부적합한 콘텐츠";
+                    item.reason = '음란성 또는 청소년에게 부적합한 콘텐츠';
                     break;
                 case 3:
-                    item.reason = "폭력 또는 혐오스러운 콘텐츠";
+                    item.reason = '폭력 또는 혐오스러운 콘텐츠';
                     break;
                 case 4:
-                    item.reason = "불법, 유해한 위험행위 등 부적절한 콘텐츠";
+                    item.reason = '불법, 유해한 위험행위 등 부적절한 콘텐츠';
                     break;
                 case 5:
-                    item.reason = "기타";
+                    item.reason = '기타';
                     break;
             }
 
-            setState(item)
-        })
-    }
+            setState(item);
+        });
+    };
 
     const numberWithCommas = (x) => {
-
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
 
     const chkBlind = (id, _type) => {
-        setOpen({ 0: false, 1: false, 2: false })
+        setOpen({ 0: false, 1: false, 2: false });
 
         return new Promise(async (result, err) => {
-
             // console.log(id)
 
-            let url = _type > 0 ? "/api/v1/admin/report/chk/blind/reply" : "/api/v1/admin/report/unchk/blind/reply"
+            let url = _type > 0 ? '/api/v1/admin/report/chk/blind/reply' : '/api/v1/admin/report/unchk/blind/reply';
             const headers = {
-                'token': window.localStorage.getItem('token'),
-                'Content-type': 'application/json; charset=utf-8'
-            }
+                token: window.localStorage.getItem('token'),
+                'Content-type': 'application/json; charset=utf-8',
+            };
 
             let res;
             let data = {
-                id: id
-            }
+                id: id,
+            };
 
             // console.log(data);
-            res = await httpRequest('POST', url, headers, JSON.stringify(data))
+            res = await httpRequest('POST', url, headers, JSON.stringify(data));
 
             if (res['code'] > 1000) {
-                alert('실패')
-                return
+                alert('실패');
+                return;
             }
 
             // console.log(res)
-            openAlert("정상 처리 되었습니다")
+            openAlert('정상 처리 되었습니다');
             setTimeout(function () {
-                window.location.reload()
-            }, 700)
-        })
-    }
+                window.location.reload();
+            }, 700);
+        });
+    };
 
     return (
         <>
-            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={"블라인드 하시겠습니까?"}
-                fn={() => chkBlind(match.params.id, 1)} />
-            <DialogAlert open={open[1]} handleClose={() => setOpen({ ...open, 1: false })} text={"블라인드 해제 하시겠습니까?"}
-                fn={() => chkBlind(match.params.id, 0)} />
+            <DialogAlert open={open[0]} handleClose={() => setOpen({ ...open, 0: false })} text={'블라인드 하시겠습니까?'} fn={() => chkBlind(match.params.id, 1)} />
+            <DialogAlert open={open[1]} handleClose={() => setOpen({ ...open, 1: false })} text={'블라인드 해제 하시겠습니까?'} fn={() => chkBlind(match.params.id, 0)} />
             <AlertText open={open[2]} handleClose={() => setOpen({ ...open, 2: false })} text={text} classes={classes} />
             <Paper className={classes.paper}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
-                        <Typography component="h2" variant="h5" color="initial" gutterBottom
-                            style={{ paddingTop: '5px', margin: 0 }} onClick={() => {
+                        <Typography
+                            component="h2"
+                            variant="h5"
+                            color="initial"
+                            gutterBottom
+                            style={{ paddingTop: '5px', margin: 0 }}
+                            onClick={() => {
                                 // console.log(state)
-                            }}>
+                            }}
+                        >
                             신고 내역 상세
                         </Typography>
                     </Grid>
+                    <Grid item xs={12} sm={2}></Grid>
                     <Grid item xs={12} sm={2}>
-                    </Grid>
-                    <Grid item xs={12} sm={2}>
-                        {!state.blind_chk ?
+                        {!state.blind_chk ? (
                             <Button
                                 fullWidth
                                 variant="contained"
                                 color="secondary"
-                                style={
-                                    {
-                                        backgroundColor: '#FFAE64'
-                                    }
-                                }
-                                onClick={() => {
-                                    setOpen({ ...open, 0: true })
+                                style={{
+                                    backgroundColor: '#FFAE64',
                                 }}
-                            >블라인드</Button> :
+                                onClick={() => {
+                                    setOpen({ ...open, 0: true });
+                                }}
+                            >
+                                블라인드
+                            </Button>
+                        ) : (
                             <Button
                                 fullWidth
                                 variant="contained"
                                 color="primary"
                                 onClick={() => {
-                                    setOpen({ ...open, 1: true })
+                                    setOpen({ ...open, 1: true });
                                 }}
-                            >블라인드 해제</Button>
-                        }
+                            >
+                                블라인드 해제
+                            </Button>
+                        )}
                     </Grid>
                     <Grid item xs={12} sm={2}>
                         <Button
@@ -208,13 +207,15 @@ export default (props) => {
                             fullWidth
                             variant="contained"
                             onClick={() => {
-                                history.push('/admin/report/reply/list')
+                                history.push('/admin/report/reply/list');
                             }}
-                        >뒤로가기</Button>
+                        >
+                            뒤로가기
+                        </Button>
                     </Grid>
                 </Grid>
             </Paper>
-            {state ?
+            {state ? (
                 <Paper className={clsx(classes.paper, classes.marginTop10)} style={{ width: '100%' }}>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={6}>
@@ -226,13 +227,11 @@ export default (props) => {
                                 value={state['report_at'] ? state['report_at'] : ''}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: { input: classes.paddingLT }
+                                    classes: { input: classes.paddingLT },
                                 }}
-                                style={
-                                    {
-                                        cursor: "default"
-                                    }
-                                }
+                                style={{
+                                    cursor: 'default',
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -244,13 +243,11 @@ export default (props) => {
                                 value={'댓글'}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: { input: classes.paddingLT }
+                                    classes: { input: classes.paddingLT },
                                 }}
-                                style={
-                                    {
-                                        cursor: "default"
-                                    }
-                                }
+                                style={{
+                                    cursor: 'default',
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -262,13 +259,11 @@ export default (props) => {
                                 value={state.reason}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: { input: classes.paddingLT }
+                                    classes: { input: classes.paddingLT },
                                 }}
-                                style={
-                                    {
-                                        cursor: "default"
-                                    }
-                                }
+                                style={{
+                                    cursor: 'default',
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -280,13 +275,11 @@ export default (props) => {
                                 value={state['reporting_nickname'] ? state['reporting_nickname'] : ''}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: { input: classes.paddingLT }
+                                    classes: { input: classes.paddingLT },
                                 }}
-                                style={
-                                    {
-                                        cursor: "default"
-                                    }
-                                }
+                                style={{
+                                    cursor: 'default',
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -298,13 +291,11 @@ export default (props) => {
                                 value={state['reported_nickname'] ? state['reported_nickname'] : ''}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: { input: classes.paddingLT }
+                                    classes: { input: classes.paddingLT },
                                 }}
-                                style={
-                                    {
-                                        cursor: "default"
-                                    }
-                                }
+                                style={{
+                                    cursor: 'default',
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
@@ -319,13 +310,11 @@ export default (props) => {
                                 rowsMax={10}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: { input: classes.paddingLT }
+                                    classes: { input: classes.paddingLT },
                                 }}
-                                style={
-                                    {
-                                        cursor: "default"
-                                    }
-                                }
+                                style={{
+                                    cursor: 'default',
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}>
@@ -337,44 +326,65 @@ export default (props) => {
                                     fontWeight: '400',
                                     lineHeight: '1',
                                     letterSpacing: '0.00938em',
-
                                 }}
-                            >신고한 영상</label>
+                            >
+                                신고한 영상
+                            </label>
                         </Grid>
-                        <Grid item xs={12} sm={5}
+                        <Grid
+                            item
+                            xs={12}
+                            sm={5}
                             style={{
-                                marginTop: "0px",
-                            }}>
+                                marginTop: '0px',
+                            }}
+                        >
                             <Grid container justify="center" alignItems="center">
-                                <Player fluid={false} width="100%" height={250} controls
-                                    poster={state.thumbnail ? process.env.REACT_APP_API_URL + state.thumbnail : ""}
+                                ref=
+                                {(player) => {
+                                    if (player?.volume) {
+                                        player.volume = 0.5;
+                                    }
+                                }}
+                                <Player
+                                    ref={(player) => {
+                                        if (player?.volume) {
+                                            player.volume = 0.5;
+                                        }
+                                    }}
+                                    fluid={false}
+                                    width="100%"
+                                    height={250}
+                                    controls
+                                    poster={state.thumbnail ? process.env.REACT_APP_API_URL + state.thumbnail : ''}
                                 >
-                                    <HLSSource
-                                        isVideoChild
-                                        src={process.env.REACT_APP_VIDEO_URL + state.video}
-                                    />
+                                    <HLSSource isVideoChild src={process.env.REACT_APP_VIDEO_URL + state.video} />
                                 </Player>
                             </Grid>
                         </Grid>
                         <Grid item xs={12} sm={7}>
                             <TableContainer>
-                                <Table className={classes.table} style={{ marginTop: "15px" }}>
+                                <Table className={classes.table} style={{ marginTop: '15px' }}>
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell className={classes.tableCellNotBorder} align="left"
+                                            <TableCell
+                                                className={classes.tableCellNotBorder}
+                                                align="left"
                                                 style={{
-                                                    fontSize: "18px",
-                                                    textDecorationLine: "underline"
+                                                    fontSize: '18px',
+                                                    textDecorationLine: 'underline',
                                                 }}
                                             >
                                                 {state.title}
                                             </TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell className={classes.tableCellNotBorder} align="left"
+                                            <TableCell
+                                                className={classes.tableCellNotBorder}
+                                                align="left"
                                                 style={{
-                                                    fontSize: "20px",
-                                                    paddingBottom: "25px"
+                                                    fontSize: '20px',
+                                                    paddingBottom: '25px',
                                                 }}
                                             >
                                                 {state.creator_nickname}
@@ -387,16 +397,12 @@ export default (props) => {
                                         </TableRow>
                                         <TableRow>
                                             <TableCell className={classes.tableCellNotBorder} align="left">
-                                                조회수 : {state.view_cnt} &nbsp;
-                                                평점 : {state.score} &nbsp;
-                                                박수 : {state.like_cnt} &nbsp;
-                                                찜 : {state.dibs_cnt} &nbsp;
+                                                조회수 : {state.view_cnt} &nbsp; 평점 : {state.score} &nbsp; 박수 : {state.like_cnt} &nbsp; 찜 : {state.dibs_cnt} &nbsp;
                                             </TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell className={classes.tableCellNotBorder} align="left">
-                                                후원수 : {state.number_of_sponsor} &nbsp;
-                                                후원 금액 : {state.total_sponsor_points}
+                                                후원수 : {state.number_of_sponsor} &nbsp; 후원 금액 : {state.total_sponsor_points}
                                             </TableCell>
                                         </TableRow>
                                     </TableBody>
@@ -415,13 +421,11 @@ export default (props) => {
                                 rowsMax={10}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: { input: classes.paddingLT }
+                                    classes: { input: classes.paddingLT },
                                 }}
-                                style={
-                                    {
-                                        cursor: "default"
-                                    }
-                                }
+                                style={{
+                                    cursor: 'default',
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -430,22 +434,23 @@ export default (props) => {
                                 name="reporting_nickname"
                                 InputLabelProps={{ shrink: true }}
                                 fullWidth
-                                value={state['blind_chk'] ? "블라인드" : "공개"}
+                                value={state['blind_chk'] ? '블라인드' : '공개'}
                                 InputProps={{
                                     readOnly: true,
-                                    classes: { input: classes.paddingLT }
+                                    classes: { input: classes.paddingLT },
                                 }}
-                                style={
-                                    {
-                                        cursor: "default",
-                                        fontWeight: "bold"
-                                    }
-                                }
+                                style={{
+                                    cursor: 'default',
+                                    fontWeight: 'bold',
+                                }}
                             />
                         </Grid>
                     </Grid>
                     <hr />
-                </Paper> : ""}
+                </Paper>
+            ) : (
+                ''
+            )}
         </>
-    )
-}
+    );
+};
