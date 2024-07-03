@@ -444,7 +444,6 @@ export default (props) => {
                                                 <TableBody>
                                                     {row.images ?
                                                         <TableRow>
-
                                                             <TableCell width={"33.3%"}
                                                                 className={classes.tableCellNotBorder}
                                                                 align="left">
